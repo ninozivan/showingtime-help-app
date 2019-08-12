@@ -18,28 +18,13 @@
       </ion-col>
       <!-- Search Results List -->
       <ion-col>
-        <ion-list>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-          <ion-item>List item</ion-item>
-        </ion-list>
+        <div [ngSwitch]="appVars.viewState">
+          <ion-list *ngSwitchCase="appVars.viewStateEnums.listExist">
+            <ion-item *ngFor="let item of itemsArrayList">adfa {{item.name}}</ion-item>
+          </ion-list>
+          <p *ngSwitchCase="appVars.viewStateEnums.isLoading">Loading...</p>
+          <p *ngSwitchCase="appVars.viewStateEnums.listEmpty">Nothing to show</p>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
