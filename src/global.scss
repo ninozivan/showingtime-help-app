@@ -24,3 +24,15 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.st-visible-lg-up{
+    display: none;
+    @media screen and (min-width:992px) {
+        display: inline;
+    }
+}
+
+.st-search-sidebar-col{
+    border-right: 1px solid #f2f2f2;
+}
