@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { KnowledgeBasePage } from './knowledge-base.page';
+import { StepSearchingComponent } from '../shared/step-searching/step-searching.component';
 
 const routes: Routes = [
   {
@@ -19,8 +20,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [KnowledgeBasePage]
+  entryComponents: [StepSearchingComponent],
+  declarations: [KnowledgeBasePage, StepSearchingComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class KnowledgeBasePageModule {}
