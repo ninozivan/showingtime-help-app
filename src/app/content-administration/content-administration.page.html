@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Knowledge Base
+      Content Administration
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,17 +14,11 @@
     <ion-row no-padding>
       <!-- Desktop Search Sidebar -->
       <ion-col class="st-search-sidebar-col st-visible-lg-up" size-sm="3">
-        <app-step-searching></app-step-searching>  
+        <app-step-searching></app-step-searching>
       </ion-col>
       <!-- Search Results List -->
       <ion-col>
-        <div [ngSwitch]="appVars.viewState">
-          <ion-list *ngSwitchCase="appVars.viewStateEnums.listExist">
-            <ion-item *ngFor="let item of itemsArrayList">adfa {{item.name}}</ion-item>
-          </ion-list>
-          <p *ngSwitchCase="appVars.viewStateEnums.isLoading">Loading...</p>
-          <p *ngSwitchCase="appVars.viewStateEnums.listEmpty">Nothing to show</p>
-        </div>
+        Content Administration
       </ion-col>
     </ion-row>
   </ion-grid>

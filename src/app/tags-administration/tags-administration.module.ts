@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
@@ -6,12 +6,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SharedModule } from '../shared/shared.module';
 
-import { KnowledgeBasePage } from './knowledge-base.page';
+import { TagsAdministrationPage } from './tags-administration.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: KnowledgeBasePage
+    component: TagsAdministrationPage
   }
 ];
 
@@ -23,7 +23,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule
   ],
-  declarations: [KnowledgeBasePage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [TagsAdministrationPage]
 })
-export class KnowledgeBasePageModule {}
+export class TagsAdministrationPageModule {}

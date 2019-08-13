@@ -16,6 +16,14 @@ const routes: Routes = [
     loadChildren: () => import('./knowledge-base/knowledge-base.module').then(m => m.KnowledgeBasePageModule)
   },
   {
+    path: 'content-administration',
+    loadChildren: () => import('./content-administration/content-administration.module').then(m => m.ContentAdministrationPageModule)
+  },
+  {
+    path: 'tags-administration',
+    loadChildren: () => import('./tags-administration/tags-administration.module').then(m => m.TagsAdministrationPageModule)
+  },
+  {
     path: 'list',
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
   }

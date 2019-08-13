@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Tags Administration
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- List of tags -->
+  <div [ngSwitch]="appVars.viewState">
+    <ion-list *ngSwitchCase="appVars.viewStateEnums.listExist">
+      <ion-item *ngFor="let item of itemsArrayList">adfa {{item.name}}</ion-item>
+    </ion-list>
+    <p *ngSwitchCase="appVars.viewStateEnums.isLoading">Loading...</p>
+    <p *ngSwitchCase="appVars.viewStateEnums.listEmpty">Nothing to show, please create new Tag</p>
+  </div>
+  <!-- FAB button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="createNewTag()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
