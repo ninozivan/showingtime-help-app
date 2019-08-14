@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="'/tags-administration'">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{appVars.pageTitle}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>Selected article</ion-col>
+    </ion-row>
+    <ion-row *ngIf="contentItem" class="ion-margin-bottom">
+      <ion-col>
+        <strong>{{contentItem.areaTag.name}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+        <strong>{{contentItem.actionTag.name}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+        <strong>{{contentItem.objectTag.name}}</strong>
+        <strong *ngIf="contentItem.conditionsTags.length > 0"><span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+        <strong *ngFor="let condition of contentItem.conditionsTags; let m = index">{{condition.selected.name}}<span
+            *ngIf="m < contentItem.conditionsTags.length - 1">,&nbsp;</span>
+        </strong>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Article Content</ion-col>
+    </ion-row>
+    <ion-row *ngIf="contentItem">
+      <ion-col>
+        <div>{{contentItem.htmlContent}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

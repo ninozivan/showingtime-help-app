@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map, take, first } from 'rxjs/operators';
-
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-knowledge-base',
   templateUrl: './knowledge-base.page.html',
@@ -24,23 +24,25 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
     }
   };
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore, private router: Router) { }
 
   public getData() {
-    this.itemsCollection = this.afs.collection('test-collection');
+    this.itemsCollection = this.afs.collection('knowledge-contents');
     this.items = this.itemsCollection.valueChanges();
-    // this.items = this.itemsCollection.valueChanges().pipe(
-    //   map(items => items.map( item => {
-    //     console.log('item in map', item);
-    //     return item;
-    //   }))
-    // );
+    //
     this.itemsSubscription = this.items.subscribe(snapshot => {
       console.log(snapshot);
       this.itemsArrayList = snapshot as [];
+      console.log('itemsArrayList ', this.itemsArrayList);
       this.appVars.viewState = this.itemsArrayList.length > 0 ? this.appVars.viewStateEnums.listExist : this.appVars.viewStateEnums.listEmpty;
     });
-    console.log('items ', this.items);
+  }
+
+  public openContent(contentItem) {
+    if (!contentItem) {
+      return;
+    }
+    this.router.navigateByUrl('knowledge-base/' + contentItem.uid);
   }
 
   ngOnInit() {

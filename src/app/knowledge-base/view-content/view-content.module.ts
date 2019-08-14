@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CreateContentPage } from './create-content.page';
-import { CKEditorModule } from 'ckeditor4-angular';
+import { ViewContentPage } from './view-content.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: CreateContentPage
+    component: ViewContentPage
   }
 ];
 
@@ -20,9 +19,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes),
-    CKEditorModule
+    RouterModule.forChild(routes)
   ],
-  declarations: [CreateContentPage]
+  declarations: [ViewContentPage]
 })
-export class CreateContentPageModule {}
+export class ViewContentPageModule {}

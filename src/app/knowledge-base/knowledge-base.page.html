@@ -14,13 +14,26 @@
     <ion-row no-padding>
       <!-- Desktop Search Sidebar -->
       <ion-col class="st-search-sidebar-col st-visible-lg-up" size-sm="3">
-        <app-step-searching></app-step-searching>  
+        <app-step-searching></app-step-searching>
       </ion-col>
       <!-- Search Results List -->
       <ion-col>
         <div [ngSwitch]="appVars.viewState">
           <ion-list *ngSwitchCase="appVars.viewStateEnums.listExist">
-            <ion-item *ngFor="let item of itemsArrayList">adfa {{item.name}}</ion-item>
+            <ion-item *ngFor="let contentItem of itemsArrayList; let i = index" detail (click)="openContent(contentItem)">
+              <ion-label>
+                {{i+1}}.&nbsp;
+                <strong>{{contentItem.areaTag.name}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+                <strong>{{contentItem.actionTag.name}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+                <strong>{{contentItem.objectTag.name}}</strong>
+                <strong *ngIf="contentItem.conditionsTags.length > 0"><span
+                    style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+                <strong
+                  *ngFor="let condition of contentItem.conditionsTags; let m = index">{{condition.selected.name}}<span
+                    *ngIf="m < contentItem.conditionsTags.length - 1">,&nbsp;</span>
+                </strong>
+              </ion-label>
+            </ion-item>
           </ion-list>
           <p *ngSwitchCase="appVars.viewStateEnums.isLoading">Loading...</p>
           <p *ngSwitchCase="appVars.viewStateEnums.listEmpty">Nothing to show</p>

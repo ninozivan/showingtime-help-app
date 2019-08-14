@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'knowledge-base',
     loadChildren: () => import('./knowledge-base/knowledge-base.module').then(m => m.KnowledgeBasePageModule)
   },
+  {
+    path: 'knowledge-base/:content-uid',
+    loadChildren: () => import('./knowledge-base/view-content/view-content.module').then(m => m.ViewContentPageModule)
+  },
   // Content
   {
     path: 'content-administration',
