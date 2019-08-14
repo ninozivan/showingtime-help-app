@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="'/tags-administration'">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Manage {{appVars.pageTitle}} Tags
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>
+      Search subheader
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+        <!-- List of tags -->
+        <div [ngSwitch]="appVars.viewState">
+          <ion-list-header *ngSwitchCase="appVars.viewStateEnums.listExist">
+            <ion-label># | Tag Name</ion-label>
+          </ion-list-header>
+          <ion-list *ngSwitchCase="appVars.viewStateEnums.listExist">
+            <ion-item *ngFor="let item of itemsArrayList; let i = index">
+              <ion-label>{{i + 1}}. {{item.name}}</ion-label>
+              <div slot="end">
+                  <ion-button fill="clear" (click)="deleteItem(item)"><ion-icon color="danger" name="trash"></ion-icon></ion-button>
+                  <ion-button fill="clear" (click)="editItem(item)"><ion-icon name="create"></ion-icon></ion-button>                
+              </div>
+            </ion-item>
+          </ion-list>
+          <p *ngSwitchCase="appVars.viewStateEnums.isLoading">Loading...</p>
+          <p *ngSwitchCase="appVars.viewStateEnums.listEmpty">Nothing to show, please create new Tag</p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- FAB button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="createNewTag()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

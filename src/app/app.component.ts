@@ -18,6 +18,16 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
+      title: 'Content Administration',
+      url: '/content-administration',
+      icon: 'list'
+    },
+    {
+      title: 'Tags Administration',
+      url: '/tags-administration',
+      icon: 'list'
+    },
+    {
       title: 'List',
       url: '/list',
       icon: 'list'

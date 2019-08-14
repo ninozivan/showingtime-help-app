@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="'/content-administration'">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Create New Content
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Tags Form -->
+  <ion-grid no-padding fixed>
+    <ion-row no-padding>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Area</ion-label>
+          <ion-select placeholder="Select One">
+            <ion-select-option value="f">MLS</ion-select-option>
+            <ion-select-option value="m">ShowingTTT</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Action</ion-label>
+          <ion-select placeholder="Select One">
+            <ion-select-option value="f">MLS</ion-select-option>
+            <ion-select-option value="m">ShowingTTT</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Object</ion-label>
+          <ion-select placeholder="Select One">
+            <ion-select-option value="f">MLS</ion-select-option>
+            <ion-select-option value="m">ShowingTTT</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row no-padding>
+      <ion-col>
+        <ion-item>
+          <ion-label position="stacked">Condition</ion-label>
+          <ion-select placeholder="Select One">
+            <ion-select-option value="f">MLS</ion-select-option>
+            <ion-select-option value="m">ShowingTTT</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- HTML Content -->
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+        Content here
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid no-padding fixed>
+      <ion-row no-padding>
+        <ion-col>
+          <ion-button color="medium" expand="block" (click)="cancelChanges()">Cancel</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="saveChanges()">Save</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
