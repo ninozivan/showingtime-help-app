@@ -18,8 +18,18 @@
       </ion-col>
       <!-- Search Results List -->
       <ion-col>
-        Content Administration
+        <ion-grid no-padding fixed>
+          <ion-row>
+            <ion-col>Content administration</ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-col>
     </ion-row>
   </ion-grid>
+  <!-- FAB button -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="'/content-create'">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
 </ion-content>
