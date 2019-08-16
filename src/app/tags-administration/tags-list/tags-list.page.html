@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
       <ion-button [routerLink]="'/tags-administration'">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>
-      Manage {{appVars.pageTitle}} Tags
+      Manage {{appVars.pageTitle}}
     </ion-title>
   </ion-toolbar>
   <ion-toolbar>
@@ -27,7 +27,7 @@
           </ion-list-header>
           <ion-list *ngSwitchCase="appVars.viewStateEnums.listExist">
             <ion-item *ngFor="let item of itemsArrayList; let i = index">
-              <ion-label>{{i + 1}}. {{item.name}}</ion-label>
+              <ion-label>{{i + 1}}. {{returnTagName(item)}}</ion-label>
               <div slot="end">
                   <ion-button fill="clear" (click)="deleteItem(item)"><ion-icon color="danger" name="trash"></ion-icon></ion-button>
                   <ion-button fill="clear" (click)="editItem(item)"><ion-icon name="create"></ion-icon></ion-button>                

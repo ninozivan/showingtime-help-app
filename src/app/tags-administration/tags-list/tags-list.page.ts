@@ -59,7 +59,7 @@ export class TagsListPage implements OnInit {
       return;
     }
 
-    console.log('tagTypeFromRouteParam: ', this.tagTypeFromRouteParam);
+    // console.log('tagTypeFromRouteParam: ', this.tagTypeFromRouteParam);
 
     this.itemsCollection = this.afs.collection(this.tagTypeFromRouteParam);
 
@@ -72,7 +72,7 @@ export class TagsListPage implements OnInit {
           ? this.appVars.viewStateEnums.listExist
           : this.appVars.viewStateEnums.listEmpty;
     });
-    console.log('items ', this.items);
+    // console.log('items ', this.items);
   }
 
   routeIsValid(inputRoute) {
@@ -80,19 +80,19 @@ export class TagsListPage implements OnInit {
     switch (inputRoute) {
       case this.appVars.tagTypes.area:
         isvalid = true;
-        this.appVars.pageTitle = 'Area';
+        this.appVars.pageTitle = 'Areas';
         break;
       case this.appVars.tagTypes.action:
         isvalid = true;
-        this.appVars.pageTitle = 'Action';
+        this.appVars.pageTitle = 'Actions';
         break;
       case this.appVars.tagTypes.object:
         isvalid = true;
-        this.appVars.pageTitle = 'Object';
+        this.appVars.pageTitle = 'Objects';
         break;
       case this.appVars.tagTypes.condition:
         isvalid = true;
-        this.appVars.pageTitle = 'Condition';
+        this.appVars.pageTitle = 'Conditions';
         break;
       default:
         isvalid = false;
@@ -101,15 +101,17 @@ export class TagsListPage implements OnInit {
   }
 
   public editItem(inputItem) {
-    console.log(' inputItem ', inputItem);
+    // console.log(' inputItem ', inputItem);
     if (!inputItem.uid) {
       return;
     }
-    this.router.navigateByUrl('/tags-administration/' + this.tagTypeFromRouteParam + '/' + inputItem.uid);
+    this.router.navigateByUrl(
+      '/tags-administration/' + this.tagTypeFromRouteParam + '/' + inputItem.uid
+    );
   }
 
   public deleteItem(inputItem) {
-    console.log(' inputItem ', inputItem);
+    // console.log(' inputItem ', inputItem);
     this.tagTypeFromRouteParam = this.activeRoute.snapshot.paramMap.get(
       'tag-type'
     );
@@ -124,7 +126,7 @@ export class TagsListPage implements OnInit {
       .doc(inputItem.uid)
       .delete()
       .then(res => {
-        console.log('save success');
+        // console.log('save success');
         this.loadCtrl.dismiss();
       })
       .catch(err => {
@@ -143,6 +145,21 @@ export class TagsListPage implements OnInit {
     const { role, data } = await loading.onDidDismiss();
 
     console.log('Loading dismissed!');
+  }
+
+  public returnTagName(inputTagItem) {
+    // console.log(' inputtagitem ', inputTagItem);
+    let returnName = null;
+    if (inputTagItem && inputTagItem.name) {
+      returnName = inputTagItem.name;
+    } else if (inputTagItem && inputTagItem.name) {
+      returnName = inputTagItem.name;
+    } else if (inputTagItem && inputTagItem.name) {
+      returnName = inputTagItem.name;
+    } else if (inputTagItem && inputTagItem.name) {
+      returnName = inputTagItem.name;
+    }
+    return returnName;
   }
 
   ngOnInit() {

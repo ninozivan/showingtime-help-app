@@ -39,18 +39,18 @@ export class ContentAdministrationPage implements OnInit {
 
 
   public getData() {
-    this.itemsCollection = this.afs.collection('knowledge-contents');
+    this.itemsCollection = this.afs.collection('knowledge-contents', ref => ref.orderBy('areaName'));
 
     this.items = this.itemsCollection.valueChanges();
     this.itemsSubscription = this.items.subscribe(snapshot => {
-      console.log(snapshot);
+      // console.log(snapshot);
       this.itemsArrayList = snapshot as [];
       this.appVars.viewState =
         this.itemsArrayList.length > 0
           ? this.appVars.viewStateEnums.listExist
           : this.appVars.viewStateEnums.listEmpty;
     });
-    console.log('items ', this.items);
+    // console.log('items ', this.items);
   }
 
   // public editItem(inputItem) {

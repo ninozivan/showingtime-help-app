@@ -84,31 +84,31 @@ export class CreateContentPage implements OnInit {
 
   private getDataFromApi() {
     // Get Areas Tags Collection
-    this.areasCollection = this.afs.collection('area-tags');
+    this.areasCollection = this.afs.collection('area-tags', ref => ref.orderBy('name'));
     this.areasItems = this.areasCollection.valueChanges();
     this.areasItemsSubscription = this.areasItems.subscribe(snapshot => {
-      console.log('areas tags ', snapshot);
+      // console.log('areas tags ', snapshot);
       this.form.area.options = snapshot as [];
     });
     // Get Actions Tags Collection
-    this.actionsCollection = this.afs.collection('action-tags');
+    this.actionsCollection = this.afs.collection('action-tags', ref => ref.orderBy('name'));
     this.actionsItems = this.actionsCollection.valueChanges();
     this.actionsItemsSubscription = this.actionsItems.subscribe(snapshot => {
-      console.log('action tags ', snapshot);
+      // console.log('action tags ', snapshot);
       this.form.action.options = snapshot as [];
     });
     // Get Objects Tags Collection
-    this.objectsCollection = this.afs.collection('object-tags');
+    this.objectsCollection = this.afs.collection('object-tags', ref => ref.orderBy('name'));
     this.objectsItems = this.objectsCollection.valueChanges();
     this.objectsItemsSubscription = this.objectsItems.subscribe(snapshot => {
-      console.log('object tags ', snapshot);
+      /// console.log('object tags ', snapshot);
       this.form.object.options = snapshot as [];
     });
     // Get Conditions Tags Collection
-    this.conditionsCollection = this.afs.collection('condition-tags');
+    this.conditionsCollection = this.afs.collection('condition-tags', ref => ref.orderBy('name'));
     this.conditionsItems = this.conditionsCollection.valueChanges();
     this.conditionsItemsSubscription = this.conditionsItems.subscribe(snapshot => {
-      console.log('condition tags ', snapshot);
+      // console.log('condition tags ', snapshot);
       this.form.conditions.options = snapshot as [];
     });
   }
@@ -122,6 +122,13 @@ export class CreateContentPage implements OnInit {
     };
     this.form.conditions.selectedList.push(emptyCondition);
   }
+  //
+  public selectChanged(optionObject, index) {
+    // console.log('event, ', optionObject);
+    // console.log('before this.form.conditions.selectedList[index], ', this.form.conditions.selectedList[index]);
+    this.form.conditions.selectedList[index] = optionObject;
+    // console.log('after this.form.conditions.selectedList[index], ', this.form.conditions.selectedList[index]);
+  }
   // Remove condition
   public removeCondition(index) {
     this.form.conditions.selectedList.splice(index, 1);
@@ -132,12 +139,13 @@ export class CreateContentPage implements OnInit {
   }
   // Save changes
   public saveChanges() {
-    console.log('save changes');
-    console.log(`area-selected: ${this.form.area.selected}, action-selected: ${this.form.action.selected}, object-selected: ${this.form.object.selected}, conditions-selected: ${this.form.conditions.selectedList.length}`);
-    console.log('area obj', this.form.area.selected);
-    console.log('action obj', this.form.action.selected);
-    console.log('object obj', this.form.object.selected);
-    console.log('stringified data ', JSON.stringify(this.form.editorData));
+    // console.log('save changes');
+    // console.log(`area-selected: ${this.form.area.selected}, action-selected: ${this.form.action.selected}, object-selected: ${this.form.object.selected}, conditions-selected: ${this.form.conditions.selectedList.length}`);
+    // console.log('area obj', this.form.area.selected);
+    // console.log('action obj', this.form.action.selected);
+    // console.log('object obj', this.form.object.selected);
+    // console.log('conditions.selectedList', this.form.conditions.selectedList);
+    // console.log('stringified data ', JSON.stringify(this.form.editorData));
     if (!this.isFormValid()) {
       return;
     }
@@ -146,16 +154,19 @@ export class CreateContentPage implements OnInit {
     //
     const idForItem = this.afs.createId();
     //
-
+    const htmlEditorContent = JSON.stringify(this.form.editorData).replace(/(\r\n|\n|\\n|\r|\\r|\t|\\t)/gm, '');
     //
     const newItem = {
-      uid: idForItem,
-      areaTag: this.form.area.selected,
-      actionTag: this.form.action.selected,
-      objectTag: this.form.object.selected,
-      conditionsTags: this.form.conditions.selectedList,
+      uid: idForItem, // Content Uid
+      areaUid: this.form.area.selected.uid, // Area Tag Uid
+      areaName: this.form.area.selected.name, // Area Tag Name
+      actionUid: this.form.action.selected.uid, // Action Tag Uid
+      actionName: this.form.action.selected.name, // Action Tag Name
+      objectUid: this.form.object.selected.uid, // Object Tag Uid
+      objectName: this.form.object.selected.name, // Object Tag Name
+      conditions: this.transformConditions(this.form.conditions.selectedList),
       //
-      htmlContent: JSON.stringify(this.form.editorData)
+      htmlContent: htmlEditorContent
     };
     this.afs.collection('knowledge-contents').doc(idForItem).set(newItem)
     .then(res => {
@@ -165,6 +176,18 @@ export class CreateContentPage implements OnInit {
       console.log('something went wrong ' + err);
       this.returnToPrevious();
     });
+  }
+  private transformConditions(inputConditionsList) {
+    const returnList = [];
+    for (let a = 0; a < inputConditionsList.length; a++) {
+      const tempObj = {
+        conditionUid: inputConditionsList[a].uid,
+        conditionName: inputConditionsList[a].name,
+        conditionDescription: inputConditionsList[a].description
+      };
+      returnList.push(tempObj);
+    }
+    return returnList;
   }
   // Check Form valid
   private isFormValid() {

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -30,26 +30,13 @@
                   <ion-item *ngFor="let contentItem of itemsArrayList; let i = index" detail>
                     <ion-label>
                       {{i+1}}.&nbsp;
-                      <strong>{{contentItem.areaTag.name}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
-                      <strong>{{contentItem.actionTag.name}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
-                      <strong>{{contentItem.objectTag.name}}</strong>
-                      <strong *ngIf="contentItem.conditionsTags.length > 0"><span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
-                      <strong *ngFor="let condition of contentItem.conditionsTags; let m = index">{{condition.selected.name}}<span *ngIf="m < contentItem.conditionsTags.length - 1">,&nbsp;</span>
+                      <strong>{{contentItem.areaName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+                      <strong>{{contentItem.actionName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+                      <strong>{{contentItem.objectName}}</strong>
+                      <strong *ngIf="contentItem.conditions.length > 0"><span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+                      <strong *ngFor="let condition of contentItem.conditions; let m = index">{{condition.conditionName}}<span *ngIf="m < contentItem.conditions.length - 1">,&nbsp;</span>
                       </strong>
                     </ion-label>
-                    <!-- <ion-label><small>{{i + 1}}. | {{contentItem.areaTag.name}} | {{contentItem.actionTag.name}} | {{contentItem.objectTag.name}}</small></ion-label> -->
-                    <!-- {{i + 1}}.<ion-chip no-margin><ion-label>{{contentItem.areaTag.name}}</ion-label></ion-chip>
-                    <ion-chip no-margin><ion-label>{{contentItem.actionTag.name}}</ion-label></ion-chip>
-                    <ion-chip no-margin><ion-label>{{contentItem.objectTag.name}}</ion-label></ion-chip>
-                    <ion-chip no-margin *ngFor="let condition of contentItem.conditionsTags"><ion-label>{{condition.selected.name}}</ion-label></ion-chip> -->
-                    <!-- <div slot="end">
-                      <ion-button fill="clear" (click)="deleteItem(item)">
-                        <ion-icon color="danger" name="trash"></ion-icon>
-                      </ion-button>
-                      <ion-button fill="clear" (click)="editItem(item)">
-                        <ion-icon name="create"></ion-icon>
-                      </ion-button>
-                    </div> -->
                   </ion-item>
                 </ion-list>
                 <p *ngSwitchCase="appVars.viewStateEnums.isLoading">Loading...</p>
