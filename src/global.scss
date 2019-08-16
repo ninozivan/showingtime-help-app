@@ -36,3 +36,10 @@
 .st-search-sidebar-col{
     border-right: 1px solid #f2f2f2;
 }
+
+.st-item-as-button{
+    cursor: pointer;
+    &:hover{
+        --background: #f2f2f2;
+    }
+}

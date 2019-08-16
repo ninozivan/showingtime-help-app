@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ViewContentPage } from './view-content.page';
+import { SanitizeHtmlPipe } from '../../shared/pipes/sanitize-html.pipe';
 
 const routes: Routes = [
   {
@@ -21,6 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ViewContentPage]
+  declarations: [ViewContentPage, SanitizeHtmlPipe]
 })
 export class ViewContentPageModule {}

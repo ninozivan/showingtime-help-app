@@ -39,7 +39,7 @@ export class TagCreatePage implements OnInit {
   }
 
   public saveChanges() {
-    console.log('save changes');
+    // console.log('save changes');
     if (!this.isFormValid() || !this.routeIsValid(this.tagTypeFromRouteParam)) {
       return;
     }
@@ -47,12 +47,21 @@ export class TagCreatePage implements OnInit {
     this.presentLoading();
 
     const idForItem = this.afs.createId();
-    this.afs.collection(this.tagTypeFromRouteParam).doc(idForItem).set({uid: idForItem, name: this.formName, description: this.formDescription})
+    const newObject = {
+      uid: idForItem,
+      type: this.returnTagType(),
+      name: this.formName,
+      description: this.formDescription
+    };
+
+    this.afs.collection(this.tagTypeFromRouteParam).doc(idForItem).set(newObject)
     .then(res => {
-      console.log('save success');
+      // console.log('save success');
+      this.clearForm();
       this.returnToPrevious();
     }).catch(err => {
       console.log('something went wrong ' + err);
+      this.clearForm();
       this.returnToPrevious();
     });
 
@@ -66,9 +75,33 @@ export class TagCreatePage implements OnInit {
     // });
   }
 
+  private clearForm() {
+    this.formName = '';
+    this.formDescription = '';
+  }
+
+  private returnTagType() {
+    let returnValue = null;
+    switch (this.tagTypeFromRouteParam) {
+      case this.appVars.tagTypes.area:
+        returnValue = 'tag-area';
+        break;
+      case this.appVars.tagTypes.action:
+          returnValue = 'tag-action';
+          break;
+      case this.appVars.tagTypes.object:
+          returnValue = 'tag-object';
+          break;
+      case this.appVars.tagTypes.condition:
+        returnValue = 'tag-condition';
+        break;
+    }
+    return returnValue;
+  }
+
   private returnToPrevious() {
     this.loadCtrl.dismiss();
-    this.router.navigateByUrl('/tags-administration');
+    this.router.navigateByUrl('/tags-administration/' + this.tagTypeFromRouteParam);
   }
 
   async presentLoading() {

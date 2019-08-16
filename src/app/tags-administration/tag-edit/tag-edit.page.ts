@@ -36,11 +36,11 @@ export class TagEditPage implements OnInit {
   constructor(private router: Router, private afs: AngularFirestore, private loadCtrl: LoadingController, private activeRoute: ActivatedRoute) { }
 
   public cancelChanges() {
-    this.router.navigateByUrl('/tags-administration');
+    this.router.navigateByUrl('/tags-administration/' + this.tagTypeFromRouteParam);
   }
 
   public saveChanges() {
-    console.log('save changes');
+    // console.log('save changes');
     if (!this.isFormValid() || !this.routeIsValid(this.tagTypeFromRouteParam)) {
       return;
     }
@@ -50,7 +50,7 @@ export class TagEditPage implements OnInit {
     const idForItem = this.afs.createId();
     this.afs.collection(this.tagTypeFromRouteParam).doc(this.tagUidFromRouteParam).update({name: this.formName, description: this.formDescription})
     .then(res => {
-      console.log('save success');
+      // console.log('save success');
       this.returnToPrevious();
     }).catch(err => {
       console.log('something went wrong ' + err);
@@ -60,7 +60,7 @@ export class TagEditPage implements OnInit {
 
   private returnToPrevious() {
     this.loadCtrl.dismiss();
-    this.router.navigateByUrl('/tags-administration');
+    this.router.navigateByUrl('/tags-administration/' + this.tagTypeFromRouteParam);
   }
 
   async presentLoading() {
@@ -84,22 +84,22 @@ export class TagEditPage implements OnInit {
   private getUrlParam() {
     this.tagTypeFromRouteParam = this.activeRoute.snapshot.paramMap.get('tag-type');
     this.tagUidFromRouteParam = this.activeRoute.snapshot.paramMap.get('tag-uid');
-    console.log(' this.tagTypeFromRouteParam ', this.tagTypeFromRouteParam);
+    // console.log(' this.tagTypeFromRouteParam ', this.tagTypeFromRouteParam);
     this.getDataFromApi();
   }
 
   private getDataFromApi() {
-    console.log(' getDataFromApi ');
+    // console.log(' getDataFromApi ');
     this.itemsCollection = this.afs.collection(this.tagTypeFromRouteParam);
     this.itemsCollection.doc(this.tagUidFromRouteParam).ref.get()
     .then(document => {
-      console.log(' getDataFromApi  SUCCESS');
+      // console.log(' getDataFromApi  SUCCESS');
       if (document) {
-        console.log(' document exist ', document.data());
-        this.formName = document.data().name;
+        // console.log(' document exist ', document.data());
+        this.formName = this.returnTagName(document);
         this.formDescription = document.data().description;
       } else {
-        console.log('read failed document dont exist');
+        // console.log('read failed document dont exist');
         this.returnToPrevious();
       }
     }).catch(err => {
@@ -118,6 +118,26 @@ export class TagEditPage implements OnInit {
     //       : this.appVars.viewStateEnums.listEmpty;
     // });
   }
+
+  private returnTagName(inputDocument) {
+    let returnName = null;
+    switch (this.tagTypeFromRouteParam) {
+      case this.appVars.tagTypes.area:
+        returnName = inputDocument.data().name;
+        break;
+      case this.appVars.tagTypes.action:
+        returnName = inputDocument.data().name;
+        break;
+      case this.appVars.tagTypes.object:
+        returnName = inputDocument.data().name;
+        break;
+      case this.appVars.tagTypes.condition:
+        returnName = inputDocument.data().name;
+        break;
+    }
+    return returnName;
+  }
+
 
   routeIsValid(inputRoute) {
     let isvalid = false;

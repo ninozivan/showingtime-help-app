@@ -75,3 +75,12 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
+
+
+ion-alert{
+  --height: auto !important;
+  --max-height: 100% !important;
+  --width: auto !important;
+  --max-width: 100% !important;
+  --min-width:480px !important;
+}

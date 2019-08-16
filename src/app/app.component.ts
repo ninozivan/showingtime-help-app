@@ -26,11 +26,6 @@ export class AppComponent implements OnInit {
       title: 'Tags Administration',
       url: '/tags-administration',
       icon: 'list'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
     }
   ];
 

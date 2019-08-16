@@ -13,31 +13,53 @@
   <ion-grid no-padding>
     <ion-row no-padding>
       <!-- Desktop Search Sidebar -->
-      <ion-col class="st-search-sidebar-col st-visible-lg-up" size-sm="3">
+      <ion-col class="st-search-sidebar-col st-visible-lg-up ion-hide-sm-down"  size-sm="3">
         <app-step-searching></app-step-searching>
       </ion-col>
       <!-- Search Results List -->
-      <ion-col>
-        <div [ngSwitch]="appVars.viewState">
-          <ion-list *ngSwitchCase="appVars.viewStateEnums.listExist">
-            <ion-item *ngFor="let contentItem of itemsArrayList; let i = index" detail (click)="openContent(contentItem)">
-              <ion-label>
-                {{i+1}}.&nbsp;
-                <strong>{{contentItem.areaTag.name}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
-                <strong>{{contentItem.actionTag.name}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
-                <strong>{{contentItem.objectTag.name}}</strong>
-                <strong *ngIf="contentItem.conditionsTags.length > 0"><span
-                    style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
-                <strong
-                  *ngFor="let condition of contentItem.conditionsTags; let m = index">{{condition.selected.name}}<span
-                    *ngIf="m < contentItem.conditionsTags.length - 1">,&nbsp;</span>
-                </strong>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-          <p *ngSwitchCase="appVars.viewStateEnums.isLoading">Loading...</p>
-          <p *ngSwitchCase="appVars.viewStateEnums.listEmpty">Nothing to show</p>
-        </div>
+      <ion-col size-sm="9">
+        <ion-grid no-padding fixed>
+          <ion-row>
+            <ion-col>
+                <div [ngSwitch]="appVars.viewState">
+                    <ion-list-header *ngSwitchCase="appVars.viewStateEnums.listExist">
+                      <ion-label><span>Area of interest > Action > Object > Conditions</span></ion-label>
+                    </ion-list-header>
+                    <ion-list *ngSwitchCase="appVars.viewStateEnums.listExist">
+                      <div *ngFor="let contentItem of itemsArrayList; let i = index">
+                        <ion-item-divider *ngIf="i === 0 || contentItem.areaName != itemsArrayList[i - 1].areaName">
+                          <ion-label>{{contentItem.areaName}}</ion-label>
+                        </ion-item-divider>
+                        <ion-item class="st-item-as-button" detail
+                          (click)="openContent(contentItem)">
+                          <ion-label>
+                            <!-- {{i+1}}.&nbsp; -->
+                            <span>{{contentItem.areaName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></span>
+                            <span>{{contentItem.actionName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></span>
+                            <span>{{contentItem.objectName}}</span>
+                            <span *ngIf="contentItem.conditions.length > 0"><span
+                                style="color:#9e9e9e;">&nbsp;>&nbsp;</span></span>
+                            <span *ngFor="let condition of contentItem.conditions; let m = index">{{condition.conditionName}}<span
+                                *ngIf="m < contentItem.conditions.length - 1">,&nbsp;</span>
+                            </span>
+                            <!-- <strong>{{contentItem.areaName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+                              <strong>{{contentItem.actionName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+                              <strong>{{contentItem.objectName}}</strong>
+                              <strong *ngIf="contentItem.conditions.length > 0"><span
+                                  style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
+                              <strong *ngFor="let condition of contentItem.conditions; let m = index">{{condition.conditionName}}<span
+                                  *ngIf="m < contentItem.conditions.length - 1">,&nbsp;</span>
+                              </strong> -->
+                          </ion-label>
+                        </ion-item>
+                      </div>
+                    </ion-list>
+                    <p *ngSwitchCase="appVars.viewStateEnums.isLoading">Loading...</p>
+                    <p *ngSwitchCase="appVars.viewStateEnums.listEmpty">Nothing to show</p>
+                  </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-col>
     </ion-row>
   </ion-grid>

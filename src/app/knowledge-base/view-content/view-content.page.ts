@@ -18,6 +18,7 @@ export class ViewContentPage implements OnInit {
   itemsArrayList = [];
 
   contentItem = null;
+  htmlContentToShow = '';
 
   contentUidFromRouteParam = '';
 
@@ -28,15 +29,17 @@ export class ViewContentPage implements OnInit {
   constructor(private router: Router, private afs: AngularFirestore, private loadCtrl: LoadingController, private activeRoute: ActivatedRoute) { }
 
   private getDataFromApi() {
-    console.log(' getDataFromApi ');
-    this.itemsCollection = this.afs.collection('knowledge-contents');
+    // console.log(' getDataFromApi ');
+    this.itemsCollection = this.afs.collection('knowledge-contents', ref => ref.orderBy('areaName'));
     this.itemsCollection.doc(this.contentUidFromRouteParam).ref.get()
     .then(document => {
-      console.log(' getDataFromApi  SUCCESS');
+      // console.log(' getDataFromApi  SUCCESS');
       if (document) {
 
-        console.log(' document exist ', document.data());
+        // console.log(' document exist ', document.data());
         this.contentItem = document.data();
+        this.htmlContentToShow = JSON.stringify(this.contentItem.htmlContent).replace(/(\r\n|\n|\\n|\r|\\r|\t|\\t|""|\\|"\\"|'')/gm, '');
+        this.appVars.pageTitle = `${this.contentItem.areaName}`;
 
       } else {
         console.log('read failed document dont exist');
