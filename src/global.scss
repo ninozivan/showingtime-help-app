@@ -90,3 +90,19 @@
 .st-font-15{
     font-size: 15px;
 }
+
+.st-responsive-item{
+    font-size: 13px;
+    @media (min-width: 768px) {
+        font-size: 14px;
+    }   
+    @media (min-width: 992px) {
+        font-size: 15px;
+    }        
+}
+
+.st-nothing-to-show-wrapper{
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+}
