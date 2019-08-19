@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { map, take, first } from 'rxjs/operators';
 import { LoadingController } from '@ionic/angular';
 import { ApiService } from './api.service';
+import { UistatesService } from '../uistates.service';
+import { ModalController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-step-searching',
@@ -53,7 +55,7 @@ export class StepSearchingComponent implements OnInit {
       options: []
     },
     refreshToggle: {
-      state: true
+      state: false
     },
     editorData: '<p>Hello, world!</p>'
   };
@@ -63,7 +65,10 @@ export class StepSearchingComponent implements OnInit {
     private router: Router,
     private afs: AngularFirestore,
     private loadCtrl: LoadingController,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private uiStates: UistatesService,
+    private modalCtrl: ModalController,
+    private platform: Platform
   ) {}
 
   public callApi() {
@@ -80,6 +85,14 @@ export class StepSearchingComponent implements OnInit {
       actionName,
       objectName
     );
+
+    if (this.uiStates.getStepSearchState()) {
+      this.modalCtrl.dismiss({
+        dismissed: true
+      });
+      this.uiStates.toggleStepSearchVisibility(false);
+    }
+
   }
 
   public anySelectChanged() {
@@ -130,6 +143,11 @@ export class StepSearchingComponent implements OnInit {
   }
 
   ngOnInit() {
+    const screenWidth = this.platform.width();
+    if (screenWidth && screenWidth < 768) {
+      console.log('screenWidth : ', screenWidth);
+      this.form.refreshToggle.state = false;
+    }
     this.getDataFromApi();
   }
 }
