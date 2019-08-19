@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import {Subject} from 'rxjs';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { map, take, first, switchMap } from 'rxjs/operators';
+import { map, take, first, skip, switchMap } from 'rxjs/operators';
 import { firestore } from 'firebase';
 import { snapshotChanges } from '@angular/fire/database';
 
@@ -30,6 +30,7 @@ export class ApiService {
       this.actionNameFilter$,
       this.objectNameFilter$
     ).pipe(
+      skip(1),
       switchMap(([areaName, actionName, objectName]) =>
         this.afs
           .collection('knowledge-contents', ref => {

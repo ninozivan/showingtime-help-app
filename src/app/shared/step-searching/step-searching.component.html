@@ -1,12 +1,10 @@
 <ion-grid no-padding>
-  <ion-row>
-    <ion-col>
-      <ion-text>
-          <h5>QUICK SEARCH</h5>
-      </ion-text>
+  <ion-row no-padding class="ion-hide-md-down">
+    <ion-col no-padding>
+      <div class="st-quick-search-title">Quick Search</div>
     </ion-col>
   </ion-row>
-  <ion-row no-padding class="ion-margin-bottom">
+  <ion-row no-padding class="st-m-b-8">
     <ion-col>
       <ion-item>
         <ion-label position="stacked">Area of interest</ion-label>
@@ -18,7 +16,7 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row no-padding class="ion-margin-bottom">
+  <ion-row no-padding class="st-m-b-8">
     <ion-col>
       <ion-item>
         <ion-label position="stacked">Your action</ion-label>
@@ -31,7 +29,7 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row no-padding class="ion-margin-bottom">
+  <ion-row no-padding class="st-m-b-8">
     <ion-col>
       <ion-item>
         <ion-label position="stacked">Object</ion-label>
@@ -44,13 +42,16 @@
       </ion-item>
     </ion-col>
   </ion-row>
-  <ion-row no-padding class="ion-margin-bottom ion-hide-md-down">
+  <ion-row no-padding class="ion-hide-md-down">
     <ion-col>
       <ion-item>
         <ion-label><small>Refresh on each select</small></ion-label>
         <ion-toggle [(ngModel)]="form.refreshToggle.state"></ion-toggle>
       </ion-item>
     </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col text-right><ion-text color="medium"><small>*All fields are optional</small></ion-text></ion-col>
   </ion-row>
   <ion-row>
     <ion-col>

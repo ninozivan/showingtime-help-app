@@ -5,3 +5,10 @@
 //     --max-width: 100% !important;
 //     --min-width:480px !important;
 //   }
+
+.st-quick-search-title{
+    display: block;
+    position: relative;
+    padding: 10px;
+    border-bottom: 1px solid var(--ion-color-light-shade, #f2f2f2);
+}
