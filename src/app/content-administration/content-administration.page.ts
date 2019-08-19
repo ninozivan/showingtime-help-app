@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   AngularFirestore,
@@ -13,7 +13,7 @@ import { LoadingController } from '@ionic/angular';
   templateUrl: './content-administration.page.html',
   styleUrls: ['./content-administration.page.scss'],
 })
-export class ContentAdministrationPage implements OnInit {
+export class ContentAdministrationPage implements OnInit, OnDestroy {
   private itemsCollection: AngularFirestoreCollection<any>;
   items: Observable<any>;
   itemsSubscription: any;
@@ -53,39 +53,6 @@ export class ContentAdministrationPage implements OnInit {
     // console.log('items ', this.items);
   }
 
-  // public editItem(inputItem) {
-  //   console.log(' inputItem ', inputItem);
-  //   if (!inputItem.uid) {
-  //     return;
-  //   }
-  //   this.router.navigateByUrl('/tags-administration/' + this.tagTypeFromRouteParam + '/' + inputItem.uid);
-  // }
-
-  // public deleteItem(inputItem) {
-  //   console.log(' inputItem ', inputItem);
-  //   this.tagTypeFromRouteParam = this.activeRoute.snapshot.paramMap.get(
-  //     'tag-type'
-  //   );
-  //   if (!this.routeIsValid(this.tagTypeFromRouteParam) || !inputItem.uid) {
-  //     return;
-  //   }
-  //   this.presentLoading();
-
-  //   this.itemsCollection = this.afs.collection(this.tagTypeFromRouteParam);
-
-  //   this.itemsCollection
-  //     .doc(inputItem.uid)
-  //     .delete()
-  //     .then(res => {
-  //       console.log('save success');
-  //       this.loadCtrl.dismiss();
-  //     })
-  //     .catch(err => {
-  //       console.log('something went wrong ' + err);
-  //       this.loadCtrl.dismiss();
-  //     });
-  // }
-
   async presentLoading() {
     const loading = await this.loadCtrl.create({
       message: 'Hellooo',
@@ -100,6 +67,10 @@ export class ContentAdministrationPage implements OnInit {
 
   ngOnInit() {
     this.getData();
+  }
+
+  ngOnDestroy() {
+    this.itemsSubscription.unsubscribe();
   }
 
 }

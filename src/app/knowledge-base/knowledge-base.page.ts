@@ -25,11 +25,12 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
   itemsArrayList = [];
   //
   appVars = {
-    viewState: 3,
+    viewState: 4,
     viewStateEnums: {
       isLoading: 1,
       listExist: 2,
-      listEmpty: 3
+      listEmpty: 3,
+      initialLoad: 4
     },
     isSearchVisibleOnSmDown: true
   };
@@ -84,6 +85,7 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
 
   async openSearchTutorial() {
     const modal = await this.modalCtrl.create({
+      cssClass: 'st-always-full-modal',
       component: SearchTutorialComponent
     });
     return await modal.present();
@@ -91,6 +93,7 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
 
   async openQuickSearchModal() {
     const modal = await this.modalCtrl.create({
+      cssClass: 'st-always-full-modal',
       component: QuickSearchComponent
     });
     return await modal.present();
@@ -101,8 +104,8 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.serviceApiResultsSubscription.unsubscribe();
-    // this.itemsSubscription.unsubscribe();
+    this.uiStatesQuickSearchSubscription.unsubscribe();
+    this.itemsSubscription.unsubscribe();
   }
 
 }

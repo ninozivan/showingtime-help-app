@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { LoadingController } from '@ionic/angular';
   templateUrl: './create-content.page.html',
   styleUrls: ['./create-content.page.scss'],
 })
-export class CreateContentPage implements OnInit {
+export class CreateContentPage implements OnInit, OnDestroy {
   // Areas tags
   private areasCollection: AngularFirestoreCollection<any>;
   areasItems: Observable<any>;
@@ -139,13 +139,6 @@ export class CreateContentPage implements OnInit {
   }
   // Save changes
   public saveChanges() {
-    // console.log('save changes');
-    // console.log(`area-selected: ${this.form.area.selected}, action-selected: ${this.form.action.selected}, object-selected: ${this.form.object.selected}, conditions-selected: ${this.form.conditions.selectedList.length}`);
-    // console.log('area obj', this.form.area.selected);
-    // console.log('action obj', this.form.action.selected);
-    // console.log('object obj', this.form.object.selected);
-    // console.log('conditions.selectedList', this.form.conditions.selectedList);
-    // console.log('stringified data ', JSON.stringify(this.form.editorData));
     if (!this.isFormValid()) {
       return;
     }
@@ -192,8 +185,6 @@ export class CreateContentPage implements OnInit {
   // Check Form valid
   private isFormValid() {
     const isValid = true;
-    // isValid = !!this.formName;
-    // isValid = !!this.formDescription;
     return isValid;
   }
 
@@ -204,6 +195,13 @@ export class CreateContentPage implements OnInit {
 
   ngOnInit() {
     this.getDataFromApi();
+  }
+
+  ngOnDestroy() {
+    this.areasItemsSubscription.unsubscribe();
+    this.actionsItemsSubscription.unsubscribe();
+    this.objectsItemsSubscription.unsubscribe();
+    this.conditionsItemsSubscription.unsubscribe();
   }
 
 }

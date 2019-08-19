@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreCollectionGroup } from '@angular/fire/firestore';
 import {Subject} from 'rxjs';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
@@ -9,7 +9,7 @@ import { snapshotChanges } from '@angular/fire/database';
 @Injectable({
   providedIn: 'root'
 })
-export class StepSearchingService {
+export class StepSearchingService implements OnDestroy {
   /* #region Multi Param */
   multiParamsQueryObservable: Observable<any>;
   //
@@ -79,6 +79,10 @@ export class StepSearchingService {
 
   public get_knowledgeContent() {
 
+  }
+
+  ngOnDestroy() {
+    this.itemsSubscription.unsubscribe();
   }
 
 }

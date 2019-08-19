@@ -10,7 +10,7 @@
         <ion-button (click)="openSearchTutorial()"><ion-icon name="help-circle"></ion-icon></ion-button>
       </ion-buttons>    
   </ion-toolbar>
-  <ion-toolbar class="ion-hide-lg-up">
+  <ion-toolbar class="ion-hide-lg-up" *ngIf="appVars.viewState != appVars.viewStateEnums.initialLoad">
     <app-knowledge-searchbar></app-knowledge-searchbar>
   </ion-toolbar>
 </ion-header>
@@ -29,16 +29,17 @@
             <ion-col>
                 <div [ngSwitch]="appVars.viewState">
                     <ion-list-header *ngSwitchCase="appVars.viewStateEnums.listExist">
-                      <ion-label><span>Area of interest > Action > Object > Conditions</span></ion-label>
+                      <!-- <ion-label><span>Area of interest > Action > Object > Conditions</span></ion-label> -->
+                      <ion-label>Showing {{itemsArrayList.length}} results for </ion-label>
                     </ion-list-header>
                     <ion-list *ngSwitchCase="appVars.viewStateEnums.listExist">
                       <div *ngFor="let contentItem of itemsArrayList; let i = index">
                         <ion-item-divider *ngIf="i === 0 || contentItem.areaName != itemsArrayList[i - 1].areaName">
-                          <ion-label>{{contentItem.areaName}}</ion-label>
+                          <ion-label color="primary">Area: {{contentItem.areaName}}</ion-label>
                         </ion-item-divider>
                         <ion-item class="st-item-as-button" detail
                           (click)="openContent(contentItem)">
-                          <ion-label>
+                          <ion-label class="st-font-15">
                             <!-- {{i+1}}.&nbsp; -->
                             <span>{{contentItem.areaName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></span>
                             <span>{{contentItem.actionName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></span>
@@ -62,6 +63,7 @@
                     </ion-list>
                     <p *ngSwitchCase="appVars.viewStateEnums.isLoading">Loading...</p>
                     <p *ngSwitchCase="appVars.viewStateEnums.listEmpty">Nothing to show</p>
+                    <app-initial-search-msg *ngSwitchCase="appVars.viewStateEnums.initialLoad"></app-initial-search-msg>
                   </div>
             </ion-col>
           </ion-row>

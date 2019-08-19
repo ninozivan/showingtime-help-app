@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { LoadingController } from '@ionic/angular';
   templateUrl: './tag-edit.page.html',
   styleUrls: ['./tag-edit.page.scss'],
 })
-export class TagEditPage implements OnInit {
+export class TagEditPage implements OnInit, OnDestroy {
 
   private itemsCollection: AngularFirestoreCollection<any>;
   items: Observable<any>;
@@ -169,5 +169,9 @@ export class TagEditPage implements OnInit {
   ngOnInit() {
     this.getUrlParam();
   }
+
+  ngOnDestroy() {
+    
+  }  
 
 }

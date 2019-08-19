@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   AngularFirestore,
@@ -16,7 +16,7 @@ import { ModalController, Platform } from '@ionic/angular';
   templateUrl: './step-searching.component.html',
   styleUrls: ['./step-searching.component.scss']
 })
-export class StepSearchingComponent implements OnInit {
+export class StepSearchingComponent implements OnInit, OnDestroy {
   private areasCollection: AngularFirestoreCollection<any>;
   areasItems: Observable<any>;
   areasItemsSubscription: any;
@@ -144,10 +144,19 @@ export class StepSearchingComponent implements OnInit {
 
   ngOnInit() {
     const screenWidth = this.platform.width();
-    if (screenWidth && screenWidth < 768) {
+    if (screenWidth && screenWidth < 992) {
       console.log('screenWidth : ', screenWidth);
       this.form.refreshToggle.state = false;
+    } else {
+      this.form.refreshToggle.state = true;
     }
     this.getDataFromApi();
+  }
+
+  ngOnDestroy() {
+    this.areasItemsSubscription.unsubscribe();
+    this.actionsItemsSubscription.unsubscribe();
+    this.objectsItemsSubscription.unsubscribe();
+    this.conditionsItemsSubscription.unsubscribe();
   }
 }

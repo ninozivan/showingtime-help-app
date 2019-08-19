@@ -56,10 +56,37 @@
     display:block;
     box-sizing: border-box;
     position: relative;
-    padding: 0 15px;
+    padding: 0 15px 20px;
+    p{
+        font-size: 16px;
+        line-height: 1.4;
+    }
     &:after{
         content: " ";
         display: table;
         clear: both;
     }
+    .st-has-example-text{
+        padding: 20px 15px;
+        background-color: #f2f2f2;
+        font-style: italic;
+        > span{
+            text-decoration: underline;
+        }
+    }
+    .st-search-tutorial-illustration-wrapper{
+        margin-top: 20px;
+        .st-has-title{
+            display: none;
+        }
+    }
+}
+
+.st-always-full-modal{
+    --height: 100%;
+    --width: 100%;
+}
+
+.st-font-15{
+    font-size: 15px;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
   AngularFirestore,
@@ -13,7 +13,7 @@ import { LoadingController } from '@ionic/angular';
   templateUrl: './tags-list.page.html',
   styleUrls: ['./tags-list.page.scss']
 })
-export class TagsListPage implements OnInit {
+export class TagsListPage implements OnInit, OnDestroy {
   private itemsCollection: AngularFirestoreCollection<any>;
   items: Observable<any>;
   itemsSubscription: any;
@@ -164,5 +164,9 @@ export class TagsListPage implements OnInit {
 
   ngOnInit() {
     this.getData();
+  }
+
+  ngOnDestroy() {
+    this.itemsSubscription.unsubscribe();
   }
 }

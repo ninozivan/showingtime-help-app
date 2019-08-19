@@ -10,6 +10,7 @@ import { KnowledgeBasePage } from './knowledge-base.page';
 import { SearchTutorialComponent } from '../shared/modals/search-tutorial/search-tutorial.component';
 import { KnowledgeSearchbarComponent } from '../shared/knowledge-searchbar/knowledge-searchbar.component';
 import { QuickSearchComponent } from '../shared/modals/quick-search/quick-search.component';
+import { InitialSearchMsgComponent } from '../shared/initial-search-msg/initial-search-msg.component';
 
 const routes: Routes = [
   {
@@ -26,8 +27,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule
   ],
-  declarations: [KnowledgeBasePage, SearchTutorialComponent, KnowledgeSearchbarComponent, QuickSearchComponent],
-  entryComponents: [SearchTutorialComponent, KnowledgeSearchbarComponent, QuickSearchComponent],
+  declarations: [KnowledgeBasePage, SearchTutorialComponent, KnowledgeSearchbarComponent, QuickSearchComponent, InitialSearchMsgComponent],
+  entryComponents: [SearchTutorialComponent, KnowledgeSearchbarComponent, QuickSearchComponent, InitialSearchMsgComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class KnowledgeBasePageModule {}
