@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar class="st-color-bg-dark-blue">
+    <ion-title>
+      How to use Quick Search
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides #refslider pager="false" [options]="slideOpts" (ionSlideDidChange)="slideChanged($event)">
+    <!-- First Slide -->
+    <ion-slide>
+      <div class="st-slide-wrapper">
+        <h5>How does it work?</h5>
+        <p>Just think in form of creating a sentence. Usually you know what you want to do and the area where you want
+          to
+          perform that action.</p>
+        <p>For an example:</p>
+        <div>"Within the <span>My Home by ShowingTime</span>, I want to <span>Create</span> an
+          <span>Appointment</span>."
+        </div>
+        <p>In the above example, <strong>My Home by ShowingTime</strong> is your <strong>Area of interest</strong>,
+          <strong>Create</strong> is the <strong>Action</strong> and the <strong>Appointment</strong>is the
+          <strong>Object</strong> on which you want to perform the action.</p>
+        <p>Keep in mind that all fields are optional, you can skip selecting any field and you will get search results
+          matching your selection.</p>
+      </div>
+    </ion-slide>
+    <!-- Second Slide -->
+    <ion-slide>
+      <div class="st-slide-wrapper">
+        <h5>Area of interest?</h5>
+        <p>In most cases you right away know what is your area of interest. It could be some of our products or maybe
+          something generally related to the ShowingTime company (Contact, Marketing, etc.).</p>
+        <div class="st-search-tutorial-illustration-wrapper">
+          <div class="st-has-title">Area of interest</div>
+          <div class="st-has-illustration">
+            <img src="../../../../assets/images/illustration-area-of-interest.png" alt="Area of interest - Illustration">
+          </div>
+        </div>
+      </div>
+    </ion-slide>
+    <!-- Third Slide -->
+    <ion-slide>
+      <div class="st-slide-wrapper">
+        <h5>Your Action?</h5>
+        <p>Simply what do you want to do. Maybe to Add, Create, Delete or perform some other action within the selected
+          Area of interest.</p>
+        <div class="st-search-tutorial-illustration-wrapper">
+          <div class="st-has-title">Your action</div>
+          <div class="st-has-illustration">
+            <img src="../../../../assets/images/illustration-action.png" alt="Action - Illustration">
+          </div>
+        </div>
+      </div>
+    </ion-slide>
+    <!-- Fourth Slide -->
+    <ion-slide>
+      <div class="st-slide-wrapper">
+        <h5>Object?</h5>
+        <p>Object on which you want to perform some action. If you want to "Create an Appointment", then "Appointment"
+          is the object of your action.<br>On other case, if you want to "Contact a Client" than "Client" is the object.
+        </p>
+        <div class="st-search-tutorial-illustration-wrapper">
+          <div class="st-has-title">Object</div>
+          <div class="st-has-illustration">
+            <img src="../../../../assets/images/illustration-object.png" alt="Object - Illustration">
+          </div>
+        </div>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid no-padding fixed>
+      <ion-row no-padding>
+        <ion-col *ngIf="buttonStates.prev">
+          <ion-button fill="outline" color="primary" expand="block" (click)="goPrev(refslider)">Previous</ion-button>
+        </ion-col>
+        <ion-col *ngIf="buttonStates.next">
+          <ion-button fill="outline" color="primary" expand="block" (click)="goNext(refslider)">Next</ion-button>
+        </ion-col>
+        <ion-col *ngIf="buttonStates.close">
+          <ion-button fill="outline" color="primary" expand="block" (click)="closeModal()">Close</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

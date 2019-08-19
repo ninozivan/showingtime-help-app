@@ -4,6 +4,9 @@ import { Observable, Subscription} from 'rxjs';
 import { map, take, first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../shared/step-searching/api.service';
+import { ModalController } from '@ionic/angular';
+import { SearchTutorialComponent } from '../shared/modals/search-tutorial/search-tutorial.component';
+
 @Component({
   selector: 'app-knowledge-base',
   templateUrl: './knowledge-base.page.html',
@@ -27,7 +30,7 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
     }
   };
 
-  constructor(private afs: AngularFirestore, private router: Router, private apiService: ApiService) {
+  constructor(private afs: AngularFirestore, private router: Router, private apiService: ApiService, private modalCtrl: ModalController) {
     this.serviceApiResultsSubscription = this.apiService.multiParamsQueryObservable.subscribe(
       data => {
         // console.log('inside knowledge base subscription api result ', data);
@@ -66,6 +69,13 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
       return 1;
     }
     return 0;
+  }
+
+  async openSearchTutorial() {
+    const modal = await this.modalCtrl.create({
+      component: SearchTutorialComponent
+    });
+    return await modal.present();
   }
 
   ngOnInit() {
