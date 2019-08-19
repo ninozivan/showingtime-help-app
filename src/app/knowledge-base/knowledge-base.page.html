@@ -1,11 +1,17 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar class="st-color-bg-dark-blue">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Knowledge Base
+      ShowingTime Help
     </ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="openSearchTutorial()"><ion-icon name="help-circle"></ion-icon></ion-button>
+      </ion-buttons>    
+  </ion-toolbar>
+  <ion-toolbar class="ion-hide-sm-up">
+    Second toolbar
   </ion-toolbar>
 </ion-header>
 

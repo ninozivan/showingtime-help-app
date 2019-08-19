@@ -13,19 +13,19 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent implements OnInit {
   public appPages = [
     {
-      title: 'Knowledge Base',
+      title: 'ShowingTime Help',
       url: '/knowledge-base',
       icon: 'home'
     },
     {
       title: 'Content Administration',
       url: '/content-administration',
-      icon: 'list'
+      icon: 'create'
     },
     {
       title: 'Tags Administration',
       url: '/tags-administration',
-      icon: 'list'
+      icon: 'link'
     }
   ];
 

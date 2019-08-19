@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SharedModule } from '../shared/shared.module';
 
 import { KnowledgeBasePage } from './knowledge-base.page';
+import { SearchTutorialComponent } from '../shared/modals/search-tutorial/search-tutorial.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule
   ],
-  declarations: [KnowledgeBasePage],
+  declarations: [KnowledgeBasePage, SearchTutorialComponent],
+  entryComponents: [SearchTutorialComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class KnowledgeBasePageModule {}

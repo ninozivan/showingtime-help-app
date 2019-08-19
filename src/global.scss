@@ -26,6 +26,12 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
+/** COLORS **/
+.st-color-bg-dark-blue{    
+    --background:var(--st-color-bg-dark-blue, #000640);
+    --color:var(--st-color-white, #fff);
+}
+
 .st-visible-lg-up{
     display: none;
     @media screen and (min-width:992px) {
@@ -41,5 +47,19 @@
     cursor: pointer;
     &:hover{
         --background: #f2f2f2;
+    }
+}
+
+.st-slide-wrapper{
+    min-width: 280px;
+    width: 100%;
+    display:block;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0 15px;
+    &:after{
+        content: " ";
+        display: table;
+        clear: both;
     }
 }
