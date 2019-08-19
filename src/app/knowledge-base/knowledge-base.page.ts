@@ -4,8 +4,10 @@ import { Observable, Subscription} from 'rxjs';
 import { map, take, first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../shared/step-searching/api.service';
+import { UistatesService } from '../shared/uistates.service';
 import { ModalController } from '@ionic/angular';
 import { SearchTutorialComponent } from '../shared/modals/search-tutorial/search-tutorial.component';
+import { QuickSearchComponent } from '../shared/modals/quick-search/quick-search.component';
 
 @Component({
   selector: 'app-knowledge-base',
@@ -15,6 +17,7 @@ import { SearchTutorialComponent } from '../shared/modals/search-tutorial/search
 export class KnowledgeBasePage implements OnInit, OnDestroy {
 
   serviceApiResultsSubscription: Subscription;
+  uiStatesQuickSearchSubscription: Subscription;
 
   private itemsCollection: AngularFirestoreCollection<any>;
   items: Observable<any>;
@@ -27,10 +30,11 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
       isLoading: 1,
       listExist: 2,
       listEmpty: 3
-    }
+    },
+    isSearchVisibleOnSmDown: true
   };
 
-  constructor(private afs: AngularFirestore, private router: Router, private apiService: ApiService, private modalCtrl: ModalController) {
+  constructor(private afs: AngularFirestore, private router: Router, private apiService: ApiService, private modalCtrl: ModalController, private uiStates: UistatesService) {
     this.serviceApiResultsSubscription = this.apiService.multiParamsQueryObservable.subscribe(
       data => {
         // console.log('inside knowledge base subscription api result ', data);
@@ -40,6 +44,13 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
       },
       error => console.log('inside knowledge base subscription api error ', error)
     );
+    /////
+    this.uiStatesQuickSearchSubscription = this.uiStates.stepSearchVisibilitySubject.subscribe(data => {
+      console.log(' new stepSearchVisibilitySubject data: ', data);
+      if (data && data === true) {
+        this.openQuickSearchModal();
+      }
+    });
   }
 
   public getData() {
@@ -74,6 +85,13 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
   async openSearchTutorial() {
     const modal = await this.modalCtrl.create({
       component: SearchTutorialComponent
+    });
+    return await modal.present();
+  }
+
+  async openQuickSearchModal() {
+    const modal = await this.modalCtrl.create({
+      component: QuickSearchComponent
     });
     return await modal.present();
   }

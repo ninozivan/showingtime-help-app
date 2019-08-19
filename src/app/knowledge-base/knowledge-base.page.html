@@ -10,8 +10,8 @@
         <ion-button (click)="openSearchTutorial()"><ion-icon name="help-circle"></ion-icon></ion-button>
       </ion-buttons>    
   </ion-toolbar>
-  <ion-toolbar class="ion-hide-sm-up">
-    Second toolbar
+  <ion-toolbar class="ion-hide-lg-up">
+    <app-knowledge-searchbar></app-knowledge-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -19,11 +19,11 @@
   <ion-grid no-padding>
     <ion-row no-padding>
       <!-- Desktop Search Sidebar -->
-      <ion-col class="st-search-sidebar-col st-visible-lg-up ion-hide-sm-down"  size-sm="3">
+      <ion-col class="st-search-sidebar-col ion-hide-md-down" size-lg="3">
         <app-step-searching></app-step-searching>
       </ion-col>
       <!-- Search Results List -->
-      <ion-col size-sm="9">
+      <ion-col size="12" size-lg="9">
         <ion-grid no-padding fixed>
           <ion-row>
             <ion-col>
