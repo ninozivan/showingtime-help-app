@@ -32,7 +32,8 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
       listEmpty: 3,
       initialLoad: 4
     },
-    isSearchVisibleOnSmDown: true
+    isSearchVisibleOnSmDown: true,
+    lastSearchParams: null
   };
 
   constructor(private afs: AngularFirestore, private router: Router, private apiService: ApiService, private modalCtrl: ModalController, private uiStates: UistatesService) {
@@ -41,6 +42,8 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
         // console.log('inside knowledge base subscription api result ', data);
         this.itemsArrayList = data as [];
         this.itemsArrayList.sort( this.sortArray );
+        this.appVars.lastSearchParams = this.apiService.get_lastMultiParams_values();
+        console.log('this.appVars.lastSearchParams: ', this.appVars.lastSearchParams);
         this.appVars.viewState = this.itemsArrayList.length > 0 ? this.appVars.viewStateEnums.listExist : this.appVars.viewStateEnums.listEmpty;
       },
       error => console.log('inside knowledge base subscription api error ', error)
@@ -104,8 +107,12 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.uiStatesQuickSearchSubscription.unsubscribe();
-    this.itemsSubscription.unsubscribe();
+    if (this.uiStatesQuickSearchSubscription) {
+      this.uiStatesQuickSearchSubscription.unsubscribe();
+    }
+    if (this.itemsSubscription) {
+      this.itemsSubscription.unsubscribe();
+    }
   }
 
 }

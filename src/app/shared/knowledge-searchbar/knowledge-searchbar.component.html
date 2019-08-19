@@ -1,10 +1,17 @@
 <ion-grid no-padding>
   <ion-row no-padding align-items-center>
+    <ion-col>
+      <ion-button color="primary" fill="clear" expand="block" (click)="showQuickSearch()">
+        <ion-icon name="search"></ion-icon> Quick Search
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row no-padding align-items-center>
     <ion-col size="10">
       <ion-input class="st-search-input" placeholder="Filter results by keyword" clearInput></ion-input>
     </ion-col>
     <ion-col no-padding size="2" text-center>
       <ion-button class="st-btn-circle"  color="primary" fill="clear" shape="round" (click)="showQuickSearch()"><ion-icon name="options"></ion-icon></ion-button>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 </ion-grid>

@@ -18,6 +18,12 @@ export class ApiService {
   actionNameFilter$: BehaviorSubject<string|null>;
   objectNameFilter$: BehaviorSubject<string|null>;
   /* #endregion Multi Param */
+  lastParams = {
+    areaName: null,
+    actionName: null,
+    objectName: null,
+    conditions: null
+  };
 
   constructor(private afs: AngularFirestore) {
 
@@ -61,10 +67,17 @@ export class ApiService {
   }
 
   public get_knowledgeContent_byMultiParams(areaName, actionName, objectName) {
+    this.lastParams.areaName = areaName ? areaName : null;
+    this.lastParams.actionName = actionName ? actionName : null;
+    this.lastParams.objectName = objectName ? objectName : null;
     // console.log(`Calling api with params, area: ${areaName}, action: ${actionName}, object: ${objectName}`);
     this.areaNameFilter$.next(areaName);
     this.actionNameFilter$.next(actionName);
     this.objectNameFilter$.next(objectName);
+  }
+
+  public get_lastMultiParams_values() {
+    return this.lastParams;
   }
 
 }
