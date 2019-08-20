@@ -25,8 +25,6 @@ export class SearchTutorialComponent implements OnInit {
 
         swiper.params.watchSlidesProgress = true;
         swiper.originalParams.watchSlidesProgress = true;
-
-        console.log('---- siper ', swiper);
       }
     }
   };
@@ -42,7 +40,6 @@ export class SearchTutorialComponent implements OnInit {
   constructor(private modalCtrl: ModalController) {}
 
   public slideChanged(event) {
-    console.log('inputPoint, ', event);
     if (event && event.target && event.target.swiper) {
       if (event.target.swiper.isBeginning) {
         this.buttonStates.prev = false;
@@ -61,15 +58,13 @@ export class SearchTutorialComponent implements OnInit {
   }
 
   public goNext(elReference) {
-    console.log('goNext, ', elReference);
     if (elReference && elReference.el && elReference.el.swiper) {
-      console.log('elReference.el.swiper ', elReference.el.swiper.slideNext());
+      elReference.el.swiper.slideNext();
     }
   }
   public goPrev(elReference) {
-    console.log('goPrev, ', elReference);
     if (elReference && elReference.el && elReference.el.swiper) {
-      console.log('elReference.el.swiper ', elReference.el.swiper.slidePrev());
+      elReference.el.swiper.slidePrev();
     }
   }
 
@@ -79,14 +74,6 @@ export class SearchTutorialComponent implements OnInit {
     });
   }
 
-  private setupSwiper() {
-    console.log('setupSwiper');
-    if (this.swiperInstance) {
-      console.log('is swiperInstance, ', this.swiperInstance);
-    }
-  }
-
   ngOnInit() {
-    this.setupSwiper();
   }
 }

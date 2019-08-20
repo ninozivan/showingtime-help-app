@@ -87,28 +87,24 @@ export class CreateContentPage implements OnInit, OnDestroy {
     this.areasCollection = this.afs.collection('area-tags', ref => ref.orderBy('name'));
     this.areasItems = this.areasCollection.valueChanges();
     this.areasItemsSubscription = this.areasItems.subscribe(snapshot => {
-      // console.log('areas tags ', snapshot);
       this.form.area.options = snapshot as [];
     });
     // Get Actions Tags Collection
     this.actionsCollection = this.afs.collection('action-tags', ref => ref.orderBy('name'));
     this.actionsItems = this.actionsCollection.valueChanges();
     this.actionsItemsSubscription = this.actionsItems.subscribe(snapshot => {
-      // console.log('action tags ', snapshot);
       this.form.action.options = snapshot as [];
     });
     // Get Objects Tags Collection
     this.objectsCollection = this.afs.collection('object-tags', ref => ref.orderBy('name'));
     this.objectsItems = this.objectsCollection.valueChanges();
     this.objectsItemsSubscription = this.objectsItems.subscribe(snapshot => {
-      /// console.log('object tags ', snapshot);
       this.form.object.options = snapshot as [];
     });
     // Get Conditions Tags Collection
     this.conditionsCollection = this.afs.collection('condition-tags', ref => ref.orderBy('name'));
     this.conditionsItems = this.conditionsCollection.valueChanges();
     this.conditionsItemsSubscription = this.conditionsItems.subscribe(snapshot => {
-      // console.log('condition tags ', snapshot);
       this.form.conditions.options = snapshot as [];
     });
   }
@@ -124,10 +120,7 @@ export class CreateContentPage implements OnInit, OnDestroy {
   }
   //
   public selectChanged(optionObject, index) {
-    // console.log('event, ', optionObject);
-    // console.log('before this.form.conditions.selectedList[index], ', this.form.conditions.selectedList[index]);
     this.form.conditions.selectedList[index] = optionObject;
-    // console.log('after this.form.conditions.selectedList[index], ', this.form.conditions.selectedList[index]);
   }
   // Remove condition
   public removeCondition(index) {
@@ -163,10 +156,8 @@ export class CreateContentPage implements OnInit, OnDestroy {
     };
     this.afs.collection('knowledge-contents').doc(idForItem).set(newItem)
     .then(res => {
-      console.log('save success');
       this.returnToPrevious();
     }).catch(err => {
-      console.log('something went wrong ' + err);
       this.returnToPrevious();
     });
   }

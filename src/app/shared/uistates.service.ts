@@ -16,7 +16,6 @@ export class UistatesService {
   }
 
   public toggleStepSearchVisibility(inputNewState?) {
-    console.log(' toggleStepSearchVisibility inputNewState ', inputNewState);
     this.stepSearchVisibilityState = inputNewState ? inputNewState : !this.stepSearchVisibilityState;
     this.stepSearchVisibilitySubject.next(this.stepSearchVisibilityState);
   }

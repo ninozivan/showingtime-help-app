@@ -40,7 +40,6 @@ export class ApiService {
       switchMap(([areaName, actionName, objectName]) =>
         this.afs
           .collection('knowledge-contents', ref => {
-            // console.log('input actionName: ',actionName,' input objectName ',objectName);
             let query:
               | firebase.firestore.CollectionReference
               | firebase.firestore.Query = ref;
@@ -60,7 +59,6 @@ export class ApiService {
     );
 
     this.multiParamsQueryObservable.subscribe(snapshot => {
-      // console.log('final snapshot for combined items ', snapshot);
       this.apiResultsSubject.next(snapshot);
     });
 
@@ -70,7 +68,6 @@ export class ApiService {
     this.lastParams.areaName = areaName ? areaName : null;
     this.lastParams.actionName = actionName ? actionName : null;
     this.lastParams.objectName = objectName ? objectName : null;
-    // console.log(`Calling api with params, area: ${areaName}, action: ${actionName}, object: ${objectName}`);
     this.areaNameFilter$.next(areaName);
     this.actionNameFilter$.next(actionName);
     this.objectNameFilter$.next(objectName);
