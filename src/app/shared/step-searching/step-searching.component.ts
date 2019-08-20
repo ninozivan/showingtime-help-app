@@ -106,21 +106,18 @@ export class StepSearchingComponent implements OnInit, OnDestroy {
     this.areasCollection = this.afs.collection('area-tags', ref => ref.orderBy('name'));
     this.areasItems = this.areasCollection.valueChanges();
     this.areasItemsSubscription = this.areasItems.subscribe(snapshot => {
-      // console.log('areas tags ', snapshot);
       this.form.area.options = snapshot as [];
     });
     // Get Actions Tags Collection
     this.actionsCollection = this.afs.collection('action-tags', ref => ref.orderBy('name'));
     this.actionsItems = this.actionsCollection.valueChanges();
     this.actionsItemsSubscription = this.actionsItems.subscribe(snapshot => {
-      // console.log('action tags ', snapshot);
       this.form.action.options = snapshot as [];
     });
     // Get Objects Tags Collection
     this.objectsCollection = this.afs.collection('object-tags', ref => ref.orderBy('name'));
     this.objectsItems = this.objectsCollection.valueChanges();
     this.objectsItemsSubscription = this.objectsItems.subscribe(snapshot => {
-      // console.log('object tags ', snapshot);
       this.form.object.options = snapshot as [];
     });
     // Get Conditions Tags Collection
@@ -128,7 +125,6 @@ export class StepSearchingComponent implements OnInit, OnDestroy {
     this.conditionsItems = this.conditionsCollection.valueChanges();
     this.conditionsItemsSubscription = this.conditionsItems.subscribe(
       snapshot => {
-        // console.log('condition tags ', snapshot);
         this.form.conditions.options = snapshot as [];
       }
     );
@@ -145,7 +141,6 @@ export class StepSearchingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const screenWidth = this.platform.width();
     if (screenWidth && screenWidth < 992) {
-      console.log('screenWidth : ', screenWidth);
       this.form.refreshToggle.state = false;
     } else {
       this.form.refreshToggle.state = true;

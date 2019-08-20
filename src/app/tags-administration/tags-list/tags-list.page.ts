@@ -59,20 +59,16 @@ export class TagsListPage implements OnInit, OnDestroy {
       return;
     }
 
-    // console.log('tagTypeFromRouteParam: ', this.tagTypeFromRouteParam);
-
     this.itemsCollection = this.afs.collection(this.tagTypeFromRouteParam);
 
     this.items = this.itemsCollection.valueChanges();
     this.itemsSubscription = this.items.subscribe(snapshot => {
-      console.log(snapshot);
       this.itemsArrayList = snapshot as [];
       this.appVars.viewState =
         this.itemsArrayList.length > 0
           ? this.appVars.viewStateEnums.listExist
           : this.appVars.viewStateEnums.listEmpty;
     });
-    // console.log('items ', this.items);
   }
 
   routeIsValid(inputRoute) {
@@ -101,7 +97,6 @@ export class TagsListPage implements OnInit, OnDestroy {
   }
 
   public editItem(inputItem) {
-    // console.log(' inputItem ', inputItem);
     if (!inputItem.uid) {
       return;
     }
@@ -111,7 +106,6 @@ export class TagsListPage implements OnInit, OnDestroy {
   }
 
   public deleteItem(inputItem) {
-    // console.log(' inputItem ', inputItem);
     this.tagTypeFromRouteParam = this.activeRoute.snapshot.paramMap.get(
       'tag-type'
     );
@@ -126,11 +120,9 @@ export class TagsListPage implements OnInit, OnDestroy {
       .doc(inputItem.uid)
       .delete()
       .then(res => {
-        // console.log('save success');
         this.loadCtrl.dismiss();
       })
       .catch(err => {
-        console.log('something went wrong ' + err);
         this.loadCtrl.dismiss();
       });
   }
@@ -143,12 +135,9 @@ export class TagsListPage implements OnInit, OnDestroy {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-
-    console.log('Loading dismissed!');
   }
 
   public returnTagName(inputTagItem) {
-    // console.log(' inputtagitem ', inputTagItem);
     let returnName = null;
     if (inputTagItem && inputTagItem.name) {
       returnName = inputTagItem.name;

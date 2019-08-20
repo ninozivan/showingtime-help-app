@@ -11,11 +11,9 @@ export class ShowSearchParamsComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnChanges() {
-    console.log('ngOnChanges inputParamsObject: ', this.inputParamsObject);
   }
 
   ngOnInit() {
-    console.log('ngOnInit inputParamsObject: ', this.inputParamsObject);
   }
 
 }

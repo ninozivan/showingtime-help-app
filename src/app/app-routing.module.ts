@@ -28,6 +28,10 @@ const routes: Routes = [
     path: 'content-create',
     loadChildren: () => import('./content-administration/create-content/create-content.module').then(m => m.CreateContentPageModule)
   },
+  {
+    path: 'content-administration/edit-content/:content-uid',
+    loadChildren: () => import('./content-administration/edit-content/edit-content.module').then(m => m.EditContentPageModule)
+  },
   // Tags
   {
     path: 'tags-administration',
@@ -49,6 +53,7 @@ const routes: Routes = [
     path: 'list',
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
   }
+
 ];
 
 @NgModule({

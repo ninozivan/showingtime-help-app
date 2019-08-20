@@ -48,17 +48,14 @@ export class ContentAdministrationPage implements OnInit, OnDestroy {
   ) {
     this.serviceApiResultsSubscription = this.apiService.multiParamsQueryObservable.subscribe(
       data => {
-        // console.log('inside knowledge base subscription api result ', data);
         this.itemsArrayList = data as [];
         this.itemsArrayList.sort( this.sortArray );
         this.appVars.lastSearchParams = this.apiService.get_lastMultiParams_values();
-        console.log('this.appVars.lastSearchParams: ', this.appVars.lastSearchParams);
         this.appVars.viewState = this.itemsArrayList.length > 0 ? this.appVars.viewStateEnums.listExist : this.appVars.viewStateEnums.listEmpty;
       },
       error => console.log('inside knowledge base subscription api error ', error)
     );
     this.uiStatesQuickSearchSubscription = this.uiStates.stepSearchVisibilitySubject.subscribe(data => {
-      console.log(' new stepSearchVisibilitySubject data: ', data);
       if (data && data === true) {
         this.openQuickSearchModal();
       }
@@ -71,14 +68,12 @@ export class ContentAdministrationPage implements OnInit, OnDestroy {
 
     this.items = this.itemsCollection.valueChanges();
     this.itemsSubscription = this.items.subscribe(snapshot => {
-      // console.log(snapshot);
       this.itemsArrayList = snapshot as [];
       this.appVars.viewState =
         this.itemsArrayList.length > 0
           ? this.appVars.viewStateEnums.listExist
           : this.appVars.viewStateEnums.listEmpty;
     });
-    // console.log('items ', this.items);
   }
 
   private sortArray(a, b) {
@@ -99,15 +94,13 @@ export class ContentAdministrationPage implements OnInit, OnDestroy {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-
-    console.log('Loading dismissed!');
   }
 
   public openContent(contentItem) {
     if (!contentItem) {
       return;
     }
-    // this.router.navigateByUrl('knowledge-base/' + contentItem.uid);
+    this.router.navigateByUrl('content-administration/edit-content/' + contentItem.uid);
   }
 
   async openQuickSearchModal() {

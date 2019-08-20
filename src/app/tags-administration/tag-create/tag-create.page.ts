@@ -39,7 +39,6 @@ export class TagCreatePage implements OnInit {
   }
 
   public saveChanges() {
-    // console.log('save changes');
     if (!this.isFormValid() || !this.routeIsValid(this.tagTypeFromRouteParam)) {
       return;
     }
@@ -56,23 +55,12 @@ export class TagCreatePage implements OnInit {
 
     this.afs.collection(this.tagTypeFromRouteParam).doc(idForItem).set(newObject)
     .then(res => {
-      // console.log('save success');
       this.clearForm();
       this.returnToPrevious();
     }).catch(err => {
-      console.log('something went wrong ' + err);
       this.clearForm();
       this.returnToPrevious();
     });
-
-    // this.afs.collection(this.tagTypeFromRouteParam).ref.add({name: 'adlfjaldf', desc: ' d9d9d99d9d9d'})
-    // .then(res => {
-    //   console.log('save success');
-    //   this.returnToPrevious();
-    // }).catch(err => {
-    //   console.log('something went wrong ' + err);
-    //   this.returnToPrevious();
-    // });
   }
 
   private clearForm() {
@@ -112,8 +100,6 @@ export class TagCreatePage implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-
-    console.log('Loading dismissed!');
   }
 
   private isFormValid() {

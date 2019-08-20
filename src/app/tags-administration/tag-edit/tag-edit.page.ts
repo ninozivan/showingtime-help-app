@@ -40,7 +40,6 @@ export class TagEditPage implements OnInit, OnDestroy {
   }
 
   public saveChanges() {
-    // console.log('save changes');
     if (!this.isFormValid() || !this.routeIsValid(this.tagTypeFromRouteParam)) {
       return;
     }
@@ -50,10 +49,8 @@ export class TagEditPage implements OnInit, OnDestroy {
     const idForItem = this.afs.createId();
     this.afs.collection(this.tagTypeFromRouteParam).doc(this.tagUidFromRouteParam).update({name: this.formName, description: this.formDescription})
     .then(res => {
-      // console.log('save success');
       this.returnToPrevious();
     }).catch(err => {
-      console.log('something went wrong ' + err);
       this.returnToPrevious();
     });
   }
@@ -71,8 +68,6 @@ export class TagEditPage implements OnInit, OnDestroy {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-
-    console.log('Loading dismissed!');
   }
   private isFormValid() {
     let isValid = false;
@@ -84,39 +79,22 @@ export class TagEditPage implements OnInit, OnDestroy {
   private getUrlParam() {
     this.tagTypeFromRouteParam = this.activeRoute.snapshot.paramMap.get('tag-type');
     this.tagUidFromRouteParam = this.activeRoute.snapshot.paramMap.get('tag-uid');
-    // console.log(' this.tagTypeFromRouteParam ', this.tagTypeFromRouteParam);
     this.getDataFromApi();
   }
 
   private getDataFromApi() {
-    // console.log(' getDataFromApi ');
     this.itemsCollection = this.afs.collection(this.tagTypeFromRouteParam);
     this.itemsCollection.doc(this.tagUidFromRouteParam).ref.get()
     .then(document => {
-      // console.log(' getDataFromApi  SUCCESS');
       if (document) {
-        // console.log(' document exist ', document.data());
         this.formName = this.returnTagName(document);
         this.formDescription = document.data().description;
       } else {
-        // console.log('read failed document dont exist');
         this.returnToPrevious();
       }
     }).catch(err => {
-      console.log('something went wrong ' + err);
       this.returnToPrevious();
     });
-    // this.itemsCollection = this.afs.collection(this.tagTypeFromRouteParam);
-
-    // this.items = this.itemsCollection.valueChanges();
-    // this.itemsSubscription = this.items.subscribe(snapshot => {
-    //   console.log(snapshot);
-    //   this.itemsArrayList = snapshot as [];
-    //   this.appVars.viewState =
-    //     this.itemsArrayList.length > 0
-    //       ? this.appVars.viewStateEnums.listExist
-    //       : this.appVars.viewStateEnums.listEmpty;
-    // });
   }
 
   private returnTagName(inputDocument) {
@@ -171,7 +149,7 @@ export class TagEditPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    
-  }  
+
+  }
 
 }

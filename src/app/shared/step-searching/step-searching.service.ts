@@ -43,7 +43,6 @@ export class StepSearchingService implements OnDestroy {
     ).pipe(
       switchMap(([areaName, actionName, objectName]) =>
         this.afs.collection('knowledge-contents', ref => {
-          // console.log('input actionName: ', actionName, ' input objectName ', objectName);
           let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref;
           if (areaName) { query = query.where('areaName', '==', areaName); }
           if (actionName) { query = query.where('actionName', '==', actionName); }
@@ -52,17 +51,13 @@ export class StepSearchingService implements OnDestroy {
         }).valueChanges()
       )
     );
-
-    // this.multiParamsQueryObservable.subscribe(snapshot => {
-    //   console.log('snapshot for combined items ', snapshot);
-    // });
   }
 
   public get_knowledgeContent_bySingleParam() {
     this.itemsCollection = this.afs.collection('knowledge-contents', ref => ref.where('actionName', '==', 'Schedule'));
     this.items = this.itemsCollection.valueChanges();
     this.itemsSubscription = this.items.subscribe(snapshot => {
-      // console.log('step searchig service :', snapshot);
+
     });
   }
 

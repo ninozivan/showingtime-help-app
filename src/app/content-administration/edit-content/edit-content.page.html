@@ -1,0 +1,96 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button [routerLink]="'/content-administration'">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>
+        Edit Content
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <!-- Tags Form -->
+    <ion-grid no-padding fixed>
+      <ion-row no-padding>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Area</ion-label>
+            <ion-select placeholder="Select One" [(ngModel)]="form.area.selected">
+              <ion-select-option *ngFor="let areaItem of form.area.options" [value]="areaItem">{{areaItem.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row no-padding>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Action</ion-label>
+            <ion-select placeholder="Select One" [(ngModel)]="form.action.selected">
+              <ion-select-option *ngFor="let actionItem of form.action.options" [value]="actionItem">
+                {{actionItem.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row no-padding>
+        <ion-col>
+          <ion-item>
+            <ion-label position="stacked">Object</ion-label>
+            <ion-select placeholder="Select One" [(ngModel)]="form.object.selected">
+              <ion-select-option *ngFor="let objectItem of form.object.options" [value]="objectItem">
+                {{objectItem.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row no-padding *ngFor="let singleCondition of form.conditions.selectedList; let i = index">
+        <ion-col size="10">
+          <ion-item>
+            <ion-label position="stacked">Condition</ion-label>
+            <ion-select placeholder="Select One" [(ngModel)]="singleCondition.uid" (ionChange)="conditionSelectChanged(singleCondition, i)">
+              <ion-select-option *ngFor="let conditionItem of form.conditions.options" [value]="conditionItem.uid">
+                {{conditionItem.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button size="small" color="danger" shape="round" (click)="removeCondition(i)"><ion-icon name="remove"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="addCondition()"><ion-icon name="add"></ion-icon> Add Condition</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- HTML Content -->
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col>
+          <ckeditor [(ngModel)]="form.editorData"></ckeditor>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+  
+  <ion-footer>
+    <ion-toolbar>
+      <ion-grid no-padding fixed>
+        <ion-row no-padding>
+          <ion-col>
+            <ion-button color="medium" expand="block" (click)="cancelChanges()">Cancel</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" (click)="saveChanges()">Save</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-footer>
