@@ -37,6 +37,7 @@ export class CreateContentPage implements OnInit, OnDestroy {
 
 
   form = {
+    title: '',
     area: {
       selected: null,
       options: []
@@ -144,6 +145,7 @@ export class CreateContentPage implements OnInit, OnDestroy {
     //
     const newItem = {
       uid: idForItem, // Content Uid
+      title: this.form.title, // Article title
       areaUid: this.form.area.selected.uid, // Area Tag Uid
       areaName: this.form.area.selected.name, // Area Tag Name
       actionUid: this.form.action.selected.uid, // Action Tag Uid

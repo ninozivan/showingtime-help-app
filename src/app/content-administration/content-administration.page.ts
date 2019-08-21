@@ -49,7 +49,7 @@ export class ContentAdministrationPage implements OnInit, OnDestroy {
     this.serviceApiResultsSubscription = this.apiService.multiParamsQueryObservable.subscribe(
       data => {
         this.itemsArrayList = data as [];
-        this.itemsArrayList.sort( this.sortArray );
+        this.itemsArrayList.sort( this.sortByAreaAndAction );
         this.appVars.lastSearchParams = this.apiService.get_lastMultiParams_values();
         this.appVars.viewState = this.itemsArrayList.length > 0 ? this.appVars.viewStateEnums.listExist : this.appVars.viewStateEnums.listEmpty;
       },
@@ -69,6 +69,7 @@ export class ContentAdministrationPage implements OnInit, OnDestroy {
     this.items = this.itemsCollection.valueChanges();
     this.itemsSubscription = this.items.subscribe(snapshot => {
       this.itemsArrayList = snapshot as [];
+      this.itemsArrayList.sort( this.sortByAreaAndAction );
       this.appVars.viewState =
         this.itemsArrayList.length > 0
           ? this.appVars.viewStateEnums.listExist
@@ -76,14 +77,12 @@ export class ContentAdministrationPage implements OnInit, OnDestroy {
     });
   }
 
-  private sortArray(a, b) {
-    if ( a.areaName < b.areaName ) {
-      return -1;
-    }
-    if ( a.areaName > b.areaName ) {
-      return 1;
-    }
-    return 0;
+  private sortByAreaAndAction(itemA, itemB) {
+    if (itemA.areaName > itemB.areaName) { return 1; }
+    if (itemA.areaName < itemB.areaName) { return -1; }
+    //
+    if (itemA.actionName > itemB.actionName) { return 1; }
+    if (itemA.actionName < itemB.actionName) { return -1; }
   }
 
   async presentLoading() {

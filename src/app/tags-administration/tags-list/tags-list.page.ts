@@ -64,6 +64,7 @@ export class TagsListPage implements OnInit, OnDestroy {
     this.items = this.itemsCollection.valueChanges();
     this.itemsSubscription = this.items.subscribe(snapshot => {
       this.itemsArrayList = snapshot as [];
+      this.itemsArrayList.sort(this.sortByTagName);
       this.appVars.viewState =
         this.itemsArrayList.length > 0
           ? this.appVars.viewStateEnums.listExist
@@ -149,6 +150,11 @@ export class TagsListPage implements OnInit, OnDestroy {
       returnName = inputTagItem.name;
     }
     return returnName;
+  }
+
+  private sortByTagName(itemA, itemB) {
+    if (itemA.name > itemB.name) { return 1; }
+    if (itemA.name < itemB.name) { return -1; }
   }
 
   ngOnInit() {
