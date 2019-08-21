@@ -30,6 +30,13 @@
 .st-color-bg-dark-blue {
     --background: var(--st-color-bg-dark-blue, #000640);
     --color: var(--st-color-white, #fff);
+    ion-icon{
+        --color: var(--st-color-white, #fff);
+        color: var(--st-color-white, #fff);
+    }
+    ion-menu-button{
+        --color: var(--st-color-white, #fff);
+    }
 }
 
 .st-visible-lg-up {
@@ -143,6 +150,7 @@ ion-alert {
 
     @media (min-width: 768px) {
         --width: 480px !important;
+        --max-width: 480px !important;
     }
 }
 
