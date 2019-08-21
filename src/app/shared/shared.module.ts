@@ -9,15 +9,16 @@ import { StepSearchingComponent } from './step-searching/step-searching.componen
 import { KnowledgeSearchbarComponent } from './knowledge-searchbar/knowledge-searchbar.component';
 import { QuickSearchComponent } from './modals/quick-search/quick-search.component';
 import { ShowSearchParamsComponent } from './show-search-params/show-search-params.component';
+import { ShortTitlePipe } from './pipes/short-title.pipe';
 
 @NgModule({
-  declarations: [StepSearchingComponent, KnowledgeSearchbarComponent, QuickSearchComponent, ShowSearchParamsComponent],
+  declarations: [StepSearchingComponent, KnowledgeSearchbarComponent, QuickSearchComponent, ShowSearchParamsComponent, ShortTitlePipe],
   imports: [
     CommonModule,
     IonicModule,
     FormsModule
   ],
   entryComponents: [StepSearchingComponent, KnowledgeSearchbarComponent, QuickSearchComponent, ShowSearchParamsComponent],
-  exports: [StepSearchingComponent, KnowledgeSearchbarComponent, QuickSearchComponent, ShowSearchParamsComponent]
+  exports: [StepSearchingComponent, KnowledgeSearchbarComponent, QuickSearchComponent, ShowSearchParamsComponent, ShortTitlePipe]
 })
 export class SharedModule { }

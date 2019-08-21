@@ -44,9 +44,9 @@
                     <ion-item class="st-item-as-button st-responsive-item" (click)="openContent(contentItem)">
                       <ion-label class="st-font-15">
                         <!-- {{i+1}}.&nbsp; -->
-                        <span>{{contentItem.areaName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></span>
+                        <span>{{contentItem.areaName | shortTitle}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></span>
                         <span>{{contentItem.actionName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></span>
-                        <span>{{contentItem.objectName}}</span>
+                        <span>{{contentItem.objectName }}</span>
                         <span *ngIf="contentItem.conditions.length > 0"><span
                             style="color:#9e9e9e;">&nbsp;>&nbsp;</span></span>
                         <span

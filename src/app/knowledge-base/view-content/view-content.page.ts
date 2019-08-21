@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { map, take, first } from 'rxjs/operators';
 import { LoadingController } from '@ionic/angular';
+import { ApiService } from '../../shared/step-searching/api.service';
 
 @Component({
   selector: 'app-view-content',
@@ -18,15 +19,31 @@ export class ViewContentPage implements OnInit {
   itemsArrayList = [];
 
   contentItem = null;
-  htmlContentToShow = '';
 
   contentUidFromRouteParam = '';
 
   appVars = {
-    pageTitle: '2324'
+    helpSlider: {
+      activeIndex: 0
+    }
   };
 
-  constructor(private router: Router, private afs: AngularFirestore, private loadCtrl: LoadingController, private activeRoute: ActivatedRoute) { }
+  form = {
+    lastSearchTags: [],
+    pageTitle: '',
+    articleTitle: '',
+    articleContent: ''
+  };
+
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+    slidesPerView: 1,
+    centeredSlides: true,
+    spaceBetween: 40,
+  };
+
+  constructor(private router: Router, private afs: AngularFirestore, private loadCtrl: LoadingController, private activeRoute: ActivatedRoute, private apiService: ApiService) { }
 
   private getDataFromApi() {
     this.itemsCollection = this.afs.collection('knowledge-contents', ref => ref.orderBy('areaName'));
@@ -34,9 +51,10 @@ export class ViewContentPage implements OnInit {
     .then(document => {
       if (document) {
         this.contentItem = document.data();
-        this.htmlContentToShow = JSON.stringify(this.contentItem.htmlContent).replace(/(\r\n|\n|\\n|\r|\\r|\t|\\t|""|\\|"\\"|'')/gm, '');
-        this.appVars.pageTitle = `${this.contentItem.areaName}`;
-
+        this.form.articleContent = JSON.stringify(this.contentItem.htmlContent).replace(/(\r\n|\n|\\n|\r|\\r|\t|\\t|""|\\|"\\"|'')/gm, '');
+        this.form.articleTitle = this.contentItem.title ? this.contentItem.title : '';
+        this.form.pageTitle = this.contentItem.areaName ? this.contentItem.areaName : 'Article';
+        this.prepareLastSearchTags();
       } else {
         console.log('read failed document dont exist');
       }
@@ -45,9 +63,37 @@ export class ViewContentPage implements OnInit {
     });
   }
 
+  private prepareLastSearchTags() {
+    const lastSearchObj = this.apiService.get_lastMultiParams_values();
+    if (lastSearchObj.areaName) {
+      this.form.lastSearchTags.push(lastSearchObj.areaName);
+    }
+    if (lastSearchObj.actionName) {
+      this.form.lastSearchTags.push(lastSearchObj.actionName);
+    }
+    if (lastSearchObj.objectName) {
+      this.form.lastSearchTags.push(lastSearchObj.objectName);
+    }
+    if (lastSearchObj.conditions && lastSearchObj.conditions.length && lastSearchObj.conditions.length > 0) {
+      for (let a = 0; a < lastSearchObj.conditions.length; a++) {
+        this.form.lastSearchTags.push(lastSearchObj.conditions[a].name);
+      }
+    }
+  }
+
   private getUrlParam() {
     this.contentUidFromRouteParam = this.activeRoute.snapshot.paramMap.get('content-uid');
     this.getDataFromApi();
+  }
+
+  public slideChanged(event) {
+    this.appVars.helpSlider.activeIndex = event.target.swiper.activeIndex;
+  }
+
+  public goToSlide(elReference, nextIndex) {
+    if (elReference && elReference.el && elReference.el.swiper) {
+      elReference.el.swiper.slideTo(nextIndex);
+    }
   }
 
   ngOnInit() {

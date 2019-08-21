@@ -6,33 +6,151 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      {{appVars.pageTitle}}
+      {{form.pageTitle}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid fixed>
-    <ion-row>
-      <ion-col>Selected article</ion-col>
-    </ion-row>
-    <ion-row *ngIf="contentItem" class="ion-margin-bottom">
+    <ion-row *ngIf="form.lastSearchTags.length > 0">
       <ion-col>
-        <strong>{{contentItem.areaName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
-        <strong>{{contentItem.actionName}}<span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
-        <strong>{{contentItem.objectName}}</strong>
-        <strong *ngIf="contentItem.conditions.length > 0"><span style="color:#9e9e9e;">&nbsp;>&nbsp;</span></strong>
-        <strong *ngFor="let condition of contentItem.conditions; let m = index">{{condition.conditionName}}<span
-            *ngIf="m < contentItem.conditions.length - 1">,&nbsp;</span>
-        </strong>
+        <div class="st-small-label">Search Terms</div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="form.lastSearchTags.length > 0" class="ion-margin-bottom">
+      <ion-col><span *ngFor="let item of form.lastSearchTags" class="st-tag-badge">{{item}}</span></ion-col>
+    </ion-row>
+    <ion-row *ngIf="form.articleTitle">
+      <ion-col>
+        <div class="st-small-label">Article Title</div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="form.articleTitle" class="ion-margin-bottom">
+      <ion-col>
+        <h4 no-margin>{{form.articleTitle}}</h4>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>Article Content</ion-col>
+      <ion-col>
+        <div class="st-small-label">Article Content</div>
+      </ion-col>
     </ion-row>
     <ion-row *ngIf="contentItem">
       <ion-col>
-        <div [innerHTML]="htmlContentToShow | sanitizeHtml"></div>
+        <div class="st-article-html-content-wrapper" [innerHTML]="form.articleContent | sanitizeHtml"></div>
+        <div class="st-end-of-content-wrapper"><ion-icon name="information-circle-outline"></ion-icon> End of the Article Content</div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <div class="st-small-label">Related articles</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item>
+            <ion-label>Example Article 1</ion-label>
+            <ion-button slot="end" fill="clear" color="dark">
+              <ion-icon slot="icon-only" name="paper"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-label>Example Article 2</ion-label>
+            <ion-button slot="end" fill="clear" color="dark">
+              <ion-icon slot="icon-only" name="paper"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-label>Example Article 3</ion-label>
+            <ion-button slot="end" fill="clear" color="dark">
+              <ion-icon slot="icon-only" name="paper"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <div class="st-small-label">Need more help? Try with the following links:</div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-bottom">
+      <ion-col>
+        <div class="st-more-help-slider-links-wrapper">
+          <div class="st-single-item" (click)="goToSlide(refslider, 0)"
+            [ngClass]="{'st-active': appVars.helpSlider.activeIndex === 0}"><span class="st-has-title">Support</span>
+          </div>
+          <div class="st-single-item" (click)="goToSlide(refslider, 1)"
+            [ngClass]="{'st-active': appVars.helpSlider.activeIndex === 1}"><span class="st-has-title">Quick
+              Links</span></div>
+          <div class="st-single-item" (click)="goToSlide(refslider, 2)"
+            [ngClass]="{'st-active': appVars.helpSlider.activeIndex === 2}"><span class="st-has-title">Contact Us</span>
+          </div>
+        </div>
+        <ion-slides #refslider pager="false" class="st-ion-slides-wrapper" (ionSlideDidChange)="slideChanged($event)">
+          <ion-slide>
+            <div class="st-slide-wrapper">
+              <h4>How can we assist you?</h4>
+              <div class="st-has-title-with-icon">
+                <ion-icon name="call"></ion-icon><strong>Technical Support</strong>
+              </div>
+              <p>I need assistance with my account, logging in, password, etc.</p>
+              <ion-button fill="outline" color="primary" size="small">Contact Technical Support</ion-button>
+              <div class="ion-margin-top st-has-title-with-icon">
+                <ion-icon name="tv"></ion-icon><strong>Talk to Sales</strong>
+              </div>
+              <p>I would like information about your products and services.</p>
+              <ion-button fill="outline" color="primary" size="small">Contact Sales</ion-button>
+              <div class="ion-margin-top st-has-title-with-icon">
+                <ion-icon name="tv"></ion-icon><strong>Schedule a Showing</strong>
+              </div>
+              <p>I’m a licensed agent and need to schedule a showing.</p>
+              <ion-button fill="outline" color="primary" size="small">Call 800-746-9464</ion-button>
+              <ion-button fill="outline" color="primary" size="small">Email Appointment Center</ion-button>
+            </div>
+          </ion-slide>
+          <ion-slide>
+            <div class="st-slide-wrapper">
+              <ion-list>
+                <ion-item detail>
+                  <ion-label>Agents</ion-label>
+                </ion-item>
+                <ion-item detail>
+                  <ion-label>Brokers/Owners</ion-label>
+                </ion-item>
+                <ion-item detail>
+                  <ion-label>Sellers</ion-label>
+                </ion-item>
+                <ion-item detail>
+                  <ion-label>MSLs/Associations</ion-label>
+                </ion-item>
+                <ion-item detail>
+                  <ion-label>Blog</ion-label>
+                </ion-item>
+                <ion-item detail>
+                  <ion-label>Resources</ion-label>
+                </ion-item>
+                <ion-item detail>
+                  <ion-label>Mobile App</ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-slide>
+          <ion-slide>
+            <div class="st-slide-wrapper">
+              <h4>Contact Us</h4>
+              <p>Appointment Center<br>800-746-9464<br>showings@showingtime.com</p>
+              <br>
+              <p>Customer Support<br>800-379-0057<br>support@showingtime.com</p>
+              <br>
+              <p>Main Line<br>312-568-8000</p>
+              <br>
+              <p>Sales<br>800-347-8001<br>sales@showingtime.com</p>
+            </div>
+          </ion-slide>
+        </ion-slides>
       </ion-col>
     </ion-row>
   </ion-grid>

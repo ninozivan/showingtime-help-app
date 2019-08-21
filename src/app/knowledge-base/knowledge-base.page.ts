@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, Subscription} from 'rxjs';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection
+} from '@angular/fire/firestore';
+import { Observable, Subscription } from 'rxjs';
 import { map, take, first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../shared/step-searching/api.service';
@@ -12,10 +15,9 @@ import { QuickSearchComponent } from '../shared/modals/quick-search/quick-search
 @Component({
   selector: 'app-knowledge-base',
   templateUrl: './knowledge-base.page.html',
-  styleUrls: ['./knowledge-base.page.scss'],
+  styleUrls: ['./knowledge-base.page.scss']
 })
 export class KnowledgeBasePage implements OnInit, OnDestroy {
-
   serviceApiResultsSubscription: Subscription;
   uiStatesQuickSearchSubscription: Subscription;
 
@@ -36,33 +38,46 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
     lastSearchParams: null
   };
 
-  constructor(private afs: AngularFirestore, private router: Router, private apiService: ApiService, private modalCtrl: ModalController, private uiStates: UistatesService) {
+  constructor(
+    private afs: AngularFirestore,
+    private router: Router,
+    private apiService: ApiService,
+    private modalCtrl: ModalController,
+    private uiStates: UistatesService
+  ) {
     this.serviceApiResultsSubscription = this.apiService.multiParamsQueryObservable.subscribe(
       data => {
         this.itemsArrayList = data as [];
-        this.itemsArrayList.sort( this.sortArray );
+        this.itemsArrayList.sort(this.sortByAreaAndAction);
+        // console.log('this.itemsArrayList ', this.itemsArrayList);
         this.appVars.lastSearchParams = this.apiService.get_lastMultiParams_values();
-        this.appVars.viewState = this.itemsArrayList.length > 0 ? this.appVars.viewStateEnums.listExist : this.appVars.viewStateEnums.listEmpty;
+        this.appVars.viewState =
+          this.itemsArrayList.length > 0
+            ? this.appVars.viewStateEnums.listExist
+            : this.appVars.viewStateEnums.listEmpty;
       },
-      error => console.log('inside knowledge base subscription api error ', error)
+      error =>
+        console.log('inside knowledge base subscription api error ', error)
     );
 
-    this.uiStatesQuickSearchSubscription = this.uiStates.stepSearchVisibilitySubject.subscribe(data => {
-      if (data && data === true) {
-        this.openQuickSearchModal();
+    this.uiStatesQuickSearchSubscription = this.uiStates.stepSearchVisibilitySubject.subscribe(
+      data => {
+        if (data && data === true) {
+          this.openQuickSearchModal();
+        }
       }
-    });
+    );
   }
 
-  public getData() {
-    this.itemsCollection = this.afs.collection('knowledge-contents', ref => ref.orderBy('areaName'));
-    this.items = this.itemsCollection.valueChanges();
-    //
-    this.itemsSubscription = this.items.subscribe(snapshot => {
-      this.itemsArrayList = snapshot as [];
-      this.appVars.viewState = this.itemsArrayList.length > 0 ? this.appVars.viewStateEnums.listExist : this.appVars.viewStateEnums.listEmpty;
-    });
-  }
+  // public getData() {
+  //   this.itemsCollection = this.afs.collection('knowledge-contents', ref => ref.orderBy('areaName'));
+  //   this.items = this.itemsCollection.valueChanges();
+  //   //
+  //   this.itemsSubscription = this.items.subscribe(snapshot => {
+  //     this.itemsArrayList = snapshot as [];
+  //     this.appVars.viewState = this.itemsArrayList.length > 0 ? this.appVars.viewStateEnums.listExist : this.appVars.viewStateEnums.listEmpty;
+  //   });
+  // }
 
   public openContent(contentItem) {
     if (!contentItem) {
@@ -71,14 +86,12 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
     this.router.navigateByUrl('knowledge-base/' + contentItem.uid);
   }
 
-  private sortArray(a, b) {
-    if ( a.areaName < b.areaName ) {
-      return -1;
-    }
-    if ( a.areaName > b.areaName ) {
-      return 1;
-    }
-    return 0;
+  private sortByAreaAndAction(itemA, itemB) {
+    if (itemA.areaName > itemB.areaName) { return 1; }
+    if (itemA.areaName < itemB.areaName) { return -1; }
+    //
+    if (itemA.actionName > itemB.actionName) { return 1; }
+    if (itemA.actionName < itemB.actionName) { return -1; }
   }
 
   async openSearchTutorial() {
@@ -102,6 +115,9 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (this.serviceApiResultsSubscription) {
+      this.serviceApiResultsSubscription.unsubscribe();
+    }
     if (this.uiStatesQuickSearchSubscription) {
       this.uiStatesQuickSearchSubscription.unsubscribe();
     }
@@ -109,5 +125,4 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
       this.itemsSubscription.unsubscribe();
     }
   }
-
 }

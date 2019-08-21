@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
       icon: 'create'
     },
     {
-      title: 'Tags Administration',
+      title: 'Search Tags Administration',
       url: '/tags-administration',
       icon: 'link'
     }

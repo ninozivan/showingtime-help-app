@@ -8,9 +8,9 @@
     <ion-col>
       <ion-item>
         <ion-label position="stacked">Area of interest</ion-label>
-        <ion-select placeholder="All Areas" [(ngModel)]="form.area.selected" (ionChange)="anySelectChanged()">
+        <ion-select placeholder="All Areas" [(ngModel)]="form.area.selected" (ionChange)="anySelectChanged()" [disabled]="form.area.optionsToShow.length == 0">
           <ion-select-option [value]="null">All Areas</ion-select-option>
-          <ion-select-option *ngFor="let areaItem of form.area.options" [value]="areaItem">{{areaItem.name}}
+          <ion-select-option *ngFor="let areaItem of form.area.optionsToShow" [value]="areaItem">{{areaItem.name}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -20,9 +20,9 @@
     <ion-col>
       <ion-item>
         <ion-label position="stacked">Your action</ion-label>
-        <ion-select placeholder="All Actions" [(ngModel)]="form.action.selected" (ionChange)="anySelectChanged()">
+        <ion-select placeholder="All Actions" [(ngModel)]="form.action.selected" (ionChange)="anySelectChanged()" [disabled]="form.action.optionsToShow.length == 0">
           <ion-select-option [value]="null">All Actions</ion-select-option>
-          <ion-select-option *ngFor="let actionItem of form.action.options" [value]="actionItem">
+          <ion-select-option *ngFor="let actionItem of form.action.optionsToShow" [value]="actionItem">
             {{actionItem.name}}
           </ion-select-option>
         </ion-select>
@@ -33,9 +33,9 @@
     <ion-col>
       <ion-item>
         <ion-label position="stacked">Object</ion-label>
-        <ion-select placeholder="All Objects" [(ngModel)]="form.object.selected" (ionChange)="anySelectChanged()">
+        <ion-select placeholder="All Objects" [(ngModel)]="form.object.selected" (ionChange)="anySelectChanged()" [disabled]="form.object.optionsToShow.length == 0">
           <ion-select-option [value]="null">All Objects</ion-select-option>
-          <ion-select-option *ngFor="let objectItem of form.object.options" [value]="objectItem">
+          <ion-select-option *ngFor="let objectItem of form.object.optionsToShow" [value]="objectItem">
             {{objectItem.name}}
           </ion-select-option>
         </ion-select>
