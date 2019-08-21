@@ -1,14 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from '@angular/fire/firestore';
-import { Observable, Subscription } from 'rxjs';
-import { map, take, first } from 'rxjs/operators';
+import { EventManager } from '@angular/platform-browser';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable, Subscription, fromEvent } from 'rxjs';
+import { map, take, first,  } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../shared/step-searching/api.service';
 import { UistatesService } from '../shared/uistates.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { SearchTutorialComponent } from '../shared/modals/search-tutorial/search-tutorial.component';
 import { QuickSearchComponent } from '../shared/modals/quick-search/quick-search.component';
 
@@ -18,15 +16,20 @@ import { QuickSearchComponent } from '../shared/modals/quick-search/quick-search
   styleUrls: ['./knowledge-base.page.scss']
 })
 export class KnowledgeBasePage implements OnInit, OnDestroy {
+  resizeObservable$: Observable<Event>;
+  resizeSubscription$: Subscription;
+  //
   serviceApiResultsSubscription: Subscription;
   uiStatesQuickSearchSubscription: Subscription;
 
   private itemsCollection: AngularFirestoreCollection<any>;
+
   items: Observable<any>;
   itemsSubscription: any;
   itemsArrayList = [];
   //
   appVars = {
+    showLeftColumn: false,
     viewState: 4,
     viewStateEnums: {
       isLoading: 1,
@@ -43,7 +46,8 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
     private router: Router,
     private apiService: ApiService,
     private modalCtrl: ModalController,
-    private uiStates: UistatesService
+    private uiStates: UistatesService,
+    private platform: Platform
   ) {
     this.serviceApiResultsSubscription = this.apiService.multiParamsQueryObservable.subscribe(
       data => {
@@ -56,17 +60,14 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
             ? this.appVars.viewStateEnums.listExist
             : this.appVars.viewStateEnums.listEmpty;
       },
-      error =>
-        console.log('inside knowledge base subscription api error ', error)
+      error => console.log('inside knowledge base subscription api error ', error)
     );
 
-    this.uiStatesQuickSearchSubscription = this.uiStates.stepSearchVisibilitySubject.subscribe(
-      data => {
-        if (data && data === true) {
-          this.openQuickSearchModal();
-        }
+    this.uiStatesQuickSearchSubscription = this.uiStates.stepSearchVisibilitySubject.subscribe(data => {
+      if (data && data === true) {
+        this.openQuickSearchModal();
       }
-    );
+    });
   }
 
   // public getData() {
@@ -87,11 +88,19 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
   }
 
   private sortByAreaAndAction(itemA, itemB) {
-    if (itemA.areaName > itemB.areaName) { return 1; }
-    if (itemA.areaName < itemB.areaName) { return -1; }
+    if (itemA.areaName > itemB.areaName) {
+      return 1;
+    }
+    if (itemA.areaName < itemB.areaName) {
+      return -1;
+    }
     //
-    if (itemA.actionName > itemB.actionName) { return 1; }
-    if (itemA.actionName < itemB.actionName) { return -1; }
+    if (itemA.actionName > itemB.actionName) {
+      return 1;
+    }
+    if (itemA.actionName < itemB.actionName) {
+      return -1;
+    }
   }
 
   async openSearchTutorial() {
@@ -110,8 +119,21 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  public checkIfResolutionIsRight() {
+    if (this.platform && this.platform.width() > 768) {
+      this.appVars.showLeftColumn = true;
+    } else {
+      this.appVars.showLeftColumn = false;
+    }
+  }
+
   ngOnInit() {
     // this.getData();
+    this.checkIfResolutionIsRight();
+    this.resizeObservable$ = fromEvent(window, 'resize');
+    this.resizeSubscription$ = this.resizeObservable$.subscribe(evt => {
+      this.checkIfResolutionIsRight();
+    });
   }
 
   ngOnDestroy() {
@@ -123,6 +145,9 @@ export class KnowledgeBasePage implements OnInit, OnDestroy {
     }
     if (this.itemsSubscription) {
       this.itemsSubscription.unsubscribe();
+    }
+    if (this.resizeSubscription$) {
+      this.resizeSubscription$.unsubscribe();
     }
   }
 }

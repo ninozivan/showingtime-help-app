@@ -108,6 +108,7 @@ export class StepSearchingComponent implements OnInit, OnDestroy {
 
   public anySelectChanged() {
     if (this.form.refreshToggle.state === true) {
+      console.log('anySelectChanged() state true');
       this.callMultiParamsApiGet();
     }
   }
@@ -160,6 +161,7 @@ export class StepSearchingComponent implements OnInit, OnDestroy {
   }
 
   public checkForSelectDisable(result) {
+    return;
     const searchResultsFromApi: any = result as [];
     //
     this.form.object.optionsToShow = this.form.object.options.filter(function(item, index, array) {
@@ -182,6 +184,7 @@ export class StepSearchingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('step-search onInit()');
     const screenWidth = this.platform.width();
     if (screenWidth && screenWidth < 992) {
       this.form.refreshToggle.state = false;
